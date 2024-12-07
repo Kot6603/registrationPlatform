@@ -1,4 +1,5 @@
 import EventContainer from '../components/EventContainer'
+import Header from '../components/Header'
 
 function LandingPage() {
   const events = [
@@ -15,6 +16,11 @@ function LandingPage() {
   ]
   return (
     <div>
+      <Header
+        heading={"Landing Page"}
+        onClick={() => console.log("hi from landing")}
+        buttonText={"Log In"}
+      />
       <EventContainer events={events} />
     </div>
   )
