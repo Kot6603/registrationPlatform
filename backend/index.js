@@ -7,6 +7,8 @@ import errorHandler from "./middleware/errorHandler.js";
 import requestLogger from "./middleware/requestLogger.js";
 import unknownEndpoint from "./middleware/unknownEndpoint.js";
 
+import { getEvents } from "./controllers/eventController.js";
+
 import connectDB from "./config/db.js";
 
 // Set up Express
@@ -22,9 +24,7 @@ app.use(requestLogger);
 connectDB();
 
 // Set up Routes
-app.get("/", (_, res) => {
-  res.send("Hello World!");
-});
+app.get("/api/events", getEvents);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
