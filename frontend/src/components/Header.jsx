@@ -1,6 +1,6 @@
 function Header({ heading, onClick, buttonText }) {
   return (
-    <div className="max-w-screen-lg p-4 bg-gray-800 shadow-lg rounded-md mx-5 my-2">
+    <div className="p-4 bg-gray-800 shadow-lg rounded-md mx-4 my-4">
       <div className="flex justify-between">
         <h1 className="font-bold text-xl text-white py-2">{heading}</h1>
         <button
