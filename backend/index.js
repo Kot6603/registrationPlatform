@@ -25,7 +25,7 @@ connectDB();
 
 // Set up Routes
 app.get("/api/events", getEvents);
-app.get("/api/event/:id", getEvent);
+app.get("/api/events/:id", getEvent);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
