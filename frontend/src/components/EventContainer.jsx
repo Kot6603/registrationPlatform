@@ -2,10 +2,10 @@ import EventCard from "./EventCard";
 
 function EventContainer({ events }) {
   return (
-    <div className="bg-white p-5 rounded-lg m-10">
+    <div className="bg-white p-5 rounded-lg">
       {events.map((event, _) => {
         return (
-          <EventCard key={event.name + event.date} name={event.name} date={event.date} desc={event.desc} />
+          <EventCard key={event.name + event.date} name={event.name} date={event.date} desc={event.description} />
         )
       })}
     </div >
