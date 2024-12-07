@@ -23,6 +23,6 @@ eventSchema.set("toJSON", {
   },
 });
 
-const Event = mongoose.model("eventSchema", eventSchema);
+const Event = mongoose.model("Event", eventSchema);
 
 export default Event;

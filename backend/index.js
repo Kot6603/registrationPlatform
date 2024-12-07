@@ -7,7 +7,7 @@ import errorHandler from "./middleware/errorHandler.js";
 import requestLogger from "./middleware/requestLogger.js";
 import unknownEndpoint from "./middleware/unknownEndpoint.js";
 
-import { getEvents } from "./controllers/eventController.js";
+import { getEvents, getEvent } from "./controllers/eventController.js";
 
 import connectDB from "./config/db.js";
 
@@ -25,6 +25,7 @@ connectDB();
 
 // Set up Routes
 app.get("/api/events", getEvents);
+app.get("/api/event/:id", getEvent);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
