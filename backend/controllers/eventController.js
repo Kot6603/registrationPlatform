@@ -18,4 +18,32 @@ const getEvent = async (request, response) => {
   }
 };
 
-export { getEvents, getEvent };
+// create a new event
+const createEvent = async (request, response, next) => {
+  const { name, description, date } = request.body;
+
+  if (name === undefined) {
+    return res.status(400).json({ error: "title missing" });
+  }
+  if (description === undefined) {
+    return res.status(400).json({ error: "description missing" });
+  }
+  if (date === undefined) {
+    return res.status(400).json({ error: "date missing" });
+  }
+
+  const event = new Event({
+    name,
+    description,
+    date,
+  });
+
+  try {
+    const savedEvent = await event.save();
+    response.json(savedEvent);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { getEvents, getEvent, createEvent };

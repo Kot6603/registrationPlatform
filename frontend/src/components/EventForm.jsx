@@ -1,13 +1,29 @@
+import EventService from "../services/event"
+import { useContext } from "react"
+import EventContext from "../context/EventContext"
+
 function EventForm() {
+  const { events, setEvents } = useContext(EventContext)
   const handleNewEvent = (e) => {
     e.preventDefault()
-    const formData = new FormData(e.target)
-    const newEvent = {
-      title: formData.get('title'),
-      description: formData.get('description'),
-      date: formData.get('date'),
+    const formDate = new Date(e.target.date.value)
+
+    if (events.some(event => event.name === e.target.name.value && new Date(event.date).getTime() === formDate.getTime())) {
+      alert("Event already exists")
+      return
     }
-    console.log(newEvent)
+
+    const newEvent = {
+      name: e.target.name.value,
+      description: e.target.description.value,
+      date: formDate,
+    }
+
+    EventService
+      .create(newEvent)
+      .then(returnedEvent => {
+        setEvents(events.concat(returnedEvent))
+      })
   }
 
   return (
@@ -15,28 +31,31 @@ function EventForm() {
       <h2 className="text-xl text-white font-bold mb-4">Create Event</h2>
       <form className="space-y-4" onSubmit={handleNewEvent}>
         <div>
-          <label htmlFor="title" className="block text-white">Title</label>
+          <label htmlFor="name" className="block text-white">Title</label>
           <input
-            id="event-name"
+            id="name"
             type="text"
             placeholder="Enter event name"
             className="w-full p-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+            required
           />
         </div>
         <div>
-          <label htmlFor="event-desc" className="block text-gray-300">Description</label>
+          <label htmlFor="description" className="block text-gray-300">Description</label>
           <textarea
-            id="event-desc"
+            id="description"
             placeholder="Enter event description"
             className="w-full p-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+            required
           ></textarea>
         </div>
         <div>
-          <label htmlFor="event-date" className="block text-gray-300">Date</label>
+          <label htmlFor="date" className="block text-gray-300">Date</label>
           <input
-            id="event-date"
+            id="date"
             type="date"
             className="w-full p-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+            required
           />
         </div>
         <button
