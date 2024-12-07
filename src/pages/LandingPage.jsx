@@ -1,11 +1,21 @@
-import EventCard from '../components/EventCard'
+import EventContainer from '../components/EventContainer'
 
 function LandingPage() {
+  const events = [
+    {
+      "name": "event 1",
+      "date": "tuesday",
+      "desc": "desc of event 1"
+    },
+    {
+      "name": "event 2",
+      "date": "wednesday",
+      "desc": "desc of event 2"
+    },
+  ]
   return (
-    <div className="red">
-      <h1>Landing Page</h1>
-      <EventCard name={"event 1"} date={"tuesday"} desc={"some desc"} />
-      <EventCard name={"event 2"} date={"wednesday"} desc={"some desc"} />
+    <div>
+      <EventContainer events={events} />
     </div>
   )
 }
