@@ -2,23 +2,18 @@ import { useContext, useEffect } from "react"
 import EventContainer from '../components/EventContainer'
 import EventContext from '../context/EventContext'
 import EventForm from '../components/EventForm'
-import axios from "axios"
+import EventService from "../services/event"
 
 function Admin() {
   const { events, setEvents } = useContext(EventContext)
 
   useEffect(() => {
-    async function fetchEvents() {
-      const response = await axios.get('http://localhost:3001/api/events')
-      if (response.status === 200) {
-        const data = response.data
-        setEvents(data)
-      }
-    }
-    fetchEvents()
+    EventService
+      .getAll()
+      .then(notes => {
+        setEvents(notes)
+      })
   }, [])
-
-  console.log(events)
 
   return (
     <div>
