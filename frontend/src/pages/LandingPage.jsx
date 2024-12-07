@@ -2,9 +2,12 @@ import EventContainer from '../components/EventContainer'
 import { useContext, useEffect } from "react"
 import EventContext from '../context/EventContext'
 import EventService from "../services/event"
+import { useNavigate } from "react-router"
 
 function LandingPage() {
   const { events, setEvents } = useContext(EventContext)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     EventService
@@ -14,14 +17,6 @@ function LandingPage() {
       })
   }, [])
 
-  const handleSignup = () => {
-    console.log("Signing up")
-  }
-
-  const handleLogin = () => {
-    console.log("Logging in")
-  }
-
   return (
     <div>
       <header className="p-4 bg-gray-800 shadow-lg rounded-md m-4">
@@ -29,13 +24,13 @@ function LandingPage() {
           <h1 className="text-3xl font-bold text-white">Event Registery</h1>
           <div>
             <button
-              onClick={handleSignup}
+              onClick={() => navigate('/signup')}
               className="bg-white text-black mx-2 px-4 py-2 rounded-md shadow-md hover:bg-gray-100 transition duration-200"
             >
               Sign Up
             </button>
             <button
-              onClick={handleLogin}
+              onClick={() => navigate('/login')}
               className="bg-white text-black mx-2 px-4 py-2 rounded-md shadow-md hover:bg-gray-100 transition duration-200"
             >
               Login

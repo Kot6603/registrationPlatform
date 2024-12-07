@@ -3,9 +3,11 @@ import AdminEventContainer from '../components/AdminEventContainer'
 import EventContext from '../context/EventContext'
 import EventForm from '../components/EventForm'
 import EventService from "../services/event"
+import { useNavigate } from "react-router"
 
 function Admin() {
   const { setEvents } = useContext(EventContext)
+  const navigate = useNavigate()
 
   useEffect(() => {
     EventService
@@ -15,17 +17,13 @@ function Admin() {
       })
   }, [])
 
-  const handleLogout = () => {
-    console.log("Logging out")
-  }
-
   return (
     <div>
       <header className="p-4 bg-gray-800 shadow-lg rounded-md m-4">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold text-white">Admin</h1>
           <button
-            onClick={handleLogout}
+            onClick={() => navigate('/')}
             className="bg-white text-black px-4 py-2 rounded-md shadow-md hover:bg-gray-100 transition duration-200"
           >
             Logout

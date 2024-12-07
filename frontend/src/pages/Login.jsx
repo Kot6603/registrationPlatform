@@ -1,11 +1,16 @@
 import { Link } from "react-router"
+import { useNavigate } from "react-router"
 
 function Login() {
+  const navigate = useNavigate()
+
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password)
+
+    navigate('/')
   }
 
   return (
