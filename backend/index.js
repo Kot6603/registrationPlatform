@@ -1,10 +1,13 @@
 import dotenv from "dotenv";
+
 import express from "express";
 import cors from "cors";
 
 import errorHandler from "./middleware/errorHandler.js";
 import requestLogger from "./middleware/requestLogger.js";
 import unknownEndpoint from "./middleware/unknownEndpoint.js";
+
+import connectDB from "./config/db.js";
 
 // Set up Express
 dotenv.config();
@@ -15,6 +18,8 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
+
+connectDB();
 
 // Set up Routes
 app.get("/", (_, res) => {
