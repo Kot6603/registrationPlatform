@@ -6,12 +6,12 @@ function LandingPage() {
     {
       "name": "event 1",
       "date": "tuesday",
-      "desc": "desc of event 1"
+      "description": "desc of event 1"
     },
     {
       "name": "event 2",
       "date": "wednesday",
-      "desc": "desc of event 2"
+      "description": "desc of event 2"
     },
   ]
   return (
