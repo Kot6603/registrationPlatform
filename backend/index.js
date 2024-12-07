@@ -7,11 +7,8 @@ import errorHandler from "./middleware/errorHandler.js";
 import requestLogger from "./middleware/requestLogger.js";
 import unknownEndpoint from "./middleware/unknownEndpoint.js";
 
-import {
-  getEvents,
-  getEvent,
-  createEvent,
-} from "./controllers/eventController.js";
+import eventRoutes from "./routes/events.js";
+import userRoutes from "./routes/user.js";
 
 import connectDB from "./config/db.js";
 
@@ -28,9 +25,8 @@ app.use(requestLogger);
 connectDB();
 
 // Set up Routes
-app.get("/api/events", getEvents);
-app.get("/api/events/:id", getEvent);
-app.post("/api/events", createEvent);
+app.use("/api/events", eventRoutes);
+app.use("/api/user", userRoutes);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
