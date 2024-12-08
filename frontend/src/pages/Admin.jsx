@@ -5,6 +5,7 @@ import { useNavigate } from "react-router"
 import useLogout from "../hooks/useLogout"
 import { useContext, useEffect, useState } from "react"
 import AuthContext from "../context/AuthContext"
+import UserCard from "../components/UserCard"
 
 function Admin() {
   const { logout } = useLogout()
@@ -23,7 +24,9 @@ function Admin() {
         console.log(error.response.data.error)
       }
     }
-    fetchUsers()
+    if (user) {
+      fetchUsers()
+    }
   }, [user])
 
   const handleLogout = () => {
@@ -56,10 +59,7 @@ function Admin() {
           {users.map((user, _) => {
             return (
               <div key={user.email} className="flex items-center space-x-4">
-                <div>
-                  <p className="text-lg font-bold">{user.name}</p>
-                  <p className="text-gray-500">{user.email}</p>
-                </div>
+                <UserCard user={user} />
               </div>
             )
           })
