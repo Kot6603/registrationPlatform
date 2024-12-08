@@ -31,4 +31,68 @@ const signupUser = async (request, response) => {
   }
 };
 
-export { signupUser, loginUser };
+const getUsers = async (_, response) => {
+  const users = await User.find({});
+  response.json(users);
+};
+
+const getUser = async (request, response) => {
+  const { id } = request.params;
+  const reqUser = request.user;
+
+  if (!reqUser) {
+    return response.status(401).json({
+      error: "Unauthorized: Valid authorization token required",
+    });
+  }
+
+  if (reqUser.id !== id) {
+    return response.status(403).json({
+      error: "Forbidden: Not authorized to view this user",
+    });
+  }
+
+  const user = await User.findById(id);
+
+  if (user) {
+    response.json(user);
+  } else {
+    response.status(404).end();
+  }
+};
+
+const updateUser = async (request, response) => {
+  const { id } = request.params;
+  const { name } = request.body;
+  const reqUser = request.user;
+
+  if (!reqUser) {
+    return response.status(401).json({
+      error: "Unauthorized: Valid authorization token required",
+    });
+  }
+
+  if (reqUser.id !== id) {
+    return response.status(403).json({
+      error: "Forbidden: Not authorized to view this user",
+    });
+  }
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      id,
+      { name },
+      { new: true, runValidators: true },
+    );
+
+    if (!user) {
+      return response.status(404).json({ error: "User not found" });
+    }
+
+    response.json(user);
+  } catch (error) {
+    response.status(400).json({ error: error.message });
+  }
+};
+
+export { signupUser, loginUser, getUsers, getUser, updateUser };

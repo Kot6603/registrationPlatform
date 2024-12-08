@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
-const baseUrl = "http://localhost:3001/api/user";
+const baseUrl = "http://localhost:3001/api/users";
 
 function useSignup() {
   const [error, setError] = useState(null);

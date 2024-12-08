@@ -1,5 +1,6 @@
+import axios from "axios"
 import EventContainer from '../components/EventContainer'
-import { useContext, useState } from "react"
+import { useEffect, useContext, useState } from "react"
 import EventContext from '../context/EventContext'
 import { useNavigate } from "react-router"
 import useLogout from "../hooks/useLogout"
@@ -10,8 +11,27 @@ function LandingPage() {
   const { events } = useContext(EventContext)
   const { user } = useContext(AuthContext)
   const { logout } = useLogout()
-  const [name, setName] = useState("")
+  const [name, setName] = useState("nani")
   const navigate = useNavigate()
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const response = await axios.get(`http://localhost:3001/api/users/${user.id}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        })
+        setName(response.data.name)
+      } catch (error) {
+        console.log(error.response.data.error)
+      }
+    }
+    if (user) {
+      fetchUser()
+    }
+  }, [user])
+
 
   const handleLogout = () => {
     logout()

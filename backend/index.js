@@ -26,7 +26,7 @@ connectDB();
 
 // Set up Routes
 app.use("/api/events", eventRoutes);
-app.use("/api/user", userRoutes);
+app.use("/api/users", userRoutes);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
