@@ -78,4 +78,20 @@ const createEvent = async (request, response, next) => {
   }
 };
 
-export { getEvents, getEvent, registerUser, createEvent };
+const deleteEvent = async (request, response) => {
+  const { id } = request.params;
+
+  try {
+    const event = await Event.findByIdAndDelete(id);
+
+    if (!event) {
+      return response.status(404).json({ error: "Event not found" });
+    }
+
+    response.json(event);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { getEvents, getEvent, registerUser, createEvent, deleteEvent };

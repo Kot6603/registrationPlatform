@@ -11,12 +11,12 @@ function EventForm() {
     const formDate = new Date(e.target.date.value)
 
     if (!user) {
-      alert("You need to be logged in to create an event")
+      console.log("You need to be logged in to create an event")
       return
     }
 
     if (events.some(event => event.name === e.target.name.value && new Date(event.date).getTime() === formDate.getTime())) {
-      alert("Event already exists")
+      console.log("Event already exists")
       return
     }
 

@@ -4,6 +4,7 @@ import {
   getEvent,
   registerUser,
   createEvent,
+  deleteEvent,
 } from "../controllers/eventController.js";
 import requireAuth from "../middleware/requireAuth.js";
 import requireAdmin from "../middleware/requireAdmin.js";
@@ -21,5 +22,6 @@ router.post("/:id/users", registerUser);
 // admin routes
 router.use(requireAdmin);
 router.post("/", createEvent);
+router.delete("/:id", deleteEvent);
 
 export default router;
