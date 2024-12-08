@@ -1,5 +1,5 @@
 import EventContainer from '../components/EventContainer'
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import EventContext from '../context/EventContext'
 import { useNavigate } from "react-router"
 import useLogout from "../hooks/useLogout"
@@ -10,7 +10,7 @@ function LandingPage() {
   const { events } = useContext(EventContext)
   const { user } = useContext(AuthContext)
   const { logout } = useLogout()
-
+  const [name, setName] = useState("")
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -60,7 +60,7 @@ function LandingPage() {
           <EventContainer events={events} />
           {user &&
             <div>
-              <UserInfo name={"yes"} email={user.email} />
+              <UserInfo name={name} email={user.email} setName={setName} />
             </div>
           }
         </div>

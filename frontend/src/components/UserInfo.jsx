@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-function UserInfo({ name: initialName, email }) {
-  const [name, setName] = useState(initialName);
+function UserInfo({ name, email, setName }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEdit = () => {
