@@ -1,12 +1,19 @@
-import EventService from "../services/event"
+import axios from "axios"
 import { useContext } from "react"
 import EventContext from "../context/EventContext"
+import AuthContext from "../context/AuthContext"
 
 function EventForm() {
   const { events, setEvents } = useContext(EventContext)
-  const handleNewEvent = (e) => {
+  const { user } = useContext(AuthContext)
+  const handleNewEvent = async (e) => {
     e.preventDefault()
     const formDate = new Date(e.target.date.value)
+
+    if (!user) {
+      alert("You need to be logged in to create an event")
+      return
+    }
 
     if (events.some(event => event.name === e.target.name.value && new Date(event.date).getTime() === formDate.getTime())) {
       alert("Event already exists")
@@ -19,11 +26,16 @@ function EventForm() {
       date: formDate,
     }
 
-    EventService
-      .create(newEvent)
-      .then(returnedEvent => {
-        setEvents(events.concat(returnedEvent))
-      })
+    try {
+      const request = await axios.post("http://localhost:3001/api/events",
+        newEvent,
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      const returnedEvent = request.data
+      setEvents(events.concat(returnedEvent))
+    } catch (error) {
+      console.log(error.response.data.error)
+    }
   }
 
   return (

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useContext } from "react";
 
 const baseUrl = "http://localhost:3001/api/events";
 
@@ -8,16 +9,11 @@ const getAll = async () => {
   return response.data;
 };
 
-const create = async (newObject) => {
-  const request = axios.post(baseUrl, newObject);
-  const response = await request;
-  return response.data;
-};
-
+// user functions
 const update = async (id, newObject) => {
   const request = axios.put(`${baseUrl}/${id}`, newObject);
   const response = await request;
   return response.data;
 };
 
-export default { getAll, create, update };
+export default { getAll, update };
