@@ -1,16 +1,22 @@
 import { Link } from "react-router"
 import { useNavigate } from "react-router"
+import useLogin from "../hooks/useLogin"
 
 function Login() {
+  const { login, loading, error } = useLogin()
   const navigate = useNavigate()
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password)
 
-    navigate('/')
+    const success = await login(email, password)
+
+    if (success) {
+      navigate("/")
+    }
   }
 
   return (
@@ -41,11 +47,13 @@ function Login() {
           <div className="w-full text-center">
             <button
               type="submit"
+              disabled={loading}
               className="mt-2 w-1/2 bg-white text-black py-3 rounded-md hover:bg-gray-100 transition duration-200"
             >
               Log In
             </button>
           </div>
+          {error && <div>{error}</div>}
         </form>
         <div className="mt-4 text-center">
           <p className="text-white">
