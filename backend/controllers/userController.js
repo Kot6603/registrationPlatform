@@ -11,7 +11,7 @@ const loginUser = async (request, response) => {
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
-    response.json({ email, token });
+    response.json({ id: user._id, email, token });
   } catch (error) {
     response.status(400).json({ error: error.message });
   }
@@ -25,7 +25,7 @@ const signupUser = async (request, response) => {
     const user = await User.signup(email, password, name);
 
     const token = createToken(user._id);
-    response.json({ email, token });
+    response.json({ id: user._id, email, token });
   } catch (error) {
     response.status(400).json({ error: error.message });
   }

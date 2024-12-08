@@ -1,3 +1,4 @@
+import axios from "axios"
 import EventCard from "./EventCard"
 import { useContext } from "react"
 import AuthContext from "../context/AuthContext"
@@ -5,8 +6,18 @@ import AuthContext from "../context/AuthContext"
 function EventContainer({ events }) {
   const { user } = useContext(AuthContext)
 
-  const handleJoin = (event) => () => {
-    console.log(event)
+  const handleJoin = (event) => async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3001/api/events/${event.id}/users`,
+        { userId: user.id },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      console.log(response.data)
+      console.log("Joined event")
+    } catch (error) {
+      console.log(error.response.data.error)
+    }
   }
 
   return (
