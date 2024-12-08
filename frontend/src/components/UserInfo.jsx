@@ -1,15 +1,29 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import axios from "axios";
+import AuthContext from "../context/AuthContext";
 
 function UserInfo({ name, email, setName }) {
   const [isEditing, setIsEditing] = useState(false);
+  const { user } = useContext(AuthContext);
 
   const handleEdit = () => {
     setIsEditing(true);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsEditing(false);
-  };
+
+    try {
+      const response = await axios.patch(
+        `http://localhost:3001/api/users/${user.id}`,
+        { name },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      setName(response.data.name);
+    } catch (error) {
+      console.log(error.response.data.error);
+    }
+  }
 
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-md w-80">
