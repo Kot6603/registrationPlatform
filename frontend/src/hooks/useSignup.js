@@ -25,9 +25,11 @@ function useSignup() {
       localStorage.setItem("user", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
       setLoading(false);
+      return true;
     } catch (error) {
       setError(error.message);
       setLoading(false);
+      return false;
     }
   };
 

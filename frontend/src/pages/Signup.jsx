@@ -1,8 +1,10 @@
 import { Link } from "react-router";
 import useSignup from "../hooks/useSignup";
+import { useNavigate } from "react-router";
 
 function Signup() {
   const { signup, loading, error } = useSignup();
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -11,7 +13,10 @@ function Signup() {
     const name = e.target.name.value;
     console.log(name, email, password);
 
-    await signup(email, password, name);
+    const success = await signup(email, password, name);
+    if (success) {
+      navigate("/")
+    }
   }
 
   return (
