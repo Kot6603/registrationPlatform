@@ -2,9 +2,11 @@ import axios from "axios"
 import EventCard from "./EventCard"
 import { useContext } from "react"
 import AuthContext from "../context/AuthContext"
+import EventContext from "../context/EventContext"
 
-function EventContainer({ events }) {
+function EventContainer() {
   const { user } = useContext(AuthContext)
+  const { events, setEvents } = useContext(EventContext)
 
   const handleJoin = (event) => async () => {
     try {
@@ -15,9 +17,28 @@ function EventContainer({ events }) {
       )
       console.log(response.data)
       console.log("Joined event")
+      const updateEvent = await axios.get(`http://localhost:3001/api/events/${event.id}`);
+      setEvents(events.map((e) => e.id === event.id ? updateEvent.data : e))
     } catch (error) {
       console.log(error.response.data.error)
     }
+  }
+
+  const getButton = (event) => {
+    return event.users.includes(user.id) ? (
+      <button
+        className="w-32 cursor-not-allowed bg-gray-300 text-white py-4 px-8 rounded-md"
+      >
+        Joined
+      </button>
+    ) : (
+      <button
+        className="w-32 bg-blue-500 text-white py-4 px-8 rounded-md hover:bg-blue-600"
+        onClick={handleJoin(event)}
+      >
+        Join
+      </button>
+    )
   }
 
   return (
@@ -34,14 +55,7 @@ function EventContainer({ events }) {
               date={new Date(event.date).toDateString()}
               desc={event.description}
             />
-            {user &&
-              <button
-                className="bg-blue-500 text-white py-4 px-8 rounded-md hover:bg-blue-600"
-                onClick={handleJoin(event)}
-              >
-                Join
-              </button>
-            }
+            {user && getButton(event)}
           </div>
         )
       })}

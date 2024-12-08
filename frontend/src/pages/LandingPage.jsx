@@ -1,14 +1,12 @@
 import axios from "axios"
 import EventContainer from '../components/EventContainer'
 import { useEffect, useContext, useState } from "react"
-import EventContext from '../context/EventContext'
 import { useNavigate } from "react-router"
 import useLogout from "../hooks/useLogout"
 import AuthContext from '../context/AuthContext'
 import UserInfo from '../components/UserInfo'
 
 function LandingPage() {
-  const { events } = useContext(EventContext)
   const { user } = useContext(AuthContext)
   const { logout } = useLogout()
   const [name, setName] = useState("nani")
@@ -77,7 +75,7 @@ function LandingPage() {
           </div >
         }
         <div className="flex space-x-10">
-          <EventContainer events={events} />
+          <EventContainer />
           {user &&
             <div>
               <UserInfo name={name} email={user.email} setName={setName} />
