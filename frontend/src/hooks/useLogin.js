@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useContext } from "react";
-import AuthContext from "../context/authContext";
+import AuthContext from "../context/AuthContext";
 
 const baseUrl = "http://localhost:3001/api/user";
 

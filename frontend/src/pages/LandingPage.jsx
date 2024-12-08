@@ -4,7 +4,7 @@ import EventContext from '../context/EventContext'
 import EventService from "../services/event"
 import { useNavigate } from "react-router"
 import useLogout from "../hooks/useLogout"
-import AuthContext from '../context/authContext'
+import AuthContext from '../context/AuthContext'
 
 function LandingPage() {
   const { events, setEvents } = useContext(EventContext)
