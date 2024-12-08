@@ -1,11 +1,30 @@
+import axios from "axios"
 import AdminEventContainer from '../components/AdminEventContainer'
 import EventForm from '../components/EventForm'
 import { useNavigate } from "react-router"
 import useLogout from "../hooks/useLogout"
+import { useContext, useEffect, useState } from "react"
+import AuthContext from "../context/AuthContext"
 
 function Admin() {
   const { logout } = useLogout()
   const navigate = useNavigate()
+  const [users, setUsers] = useState([])
+  const { user } = useContext(AuthContext)
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/api/users', {
+          headers: { Authorization: `Bearer ${user.token}` }
+        })
+        setUsers(response.data)
+      } catch (error) {
+        console.log(error.response.data.error)
+      }
+    }
+    fetchUsers()
+  }, [user])
 
   const handleLogout = () => {
     logout()
@@ -32,8 +51,19 @@ function Admin() {
         <div>
           <EventForm />
         </div>
-        <div className="lg:col-span-3 bg-gray-800 rounded-md p-6 shadow-md">
-          Account Manager
+        <div className="lg:col-span-3 bg-white rounded-md p-6 shadow-md">
+          <h2 className="text-3xl font-bold mb-2">Users</h2>
+          {users.map((user, _) => {
+            return (
+              <div key={user.email} className="flex items-center space-x-4">
+                <div>
+                  <p className="text-lg font-bold">{user.name}</p>
+                  <p className="text-gray-500">{user.email}</p>
+                </div>
+              </div>
+            )
+          })
+          }
         </div>
       </div>
     </div >
