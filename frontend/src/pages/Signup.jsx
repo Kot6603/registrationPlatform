@@ -1,15 +1,18 @@
 import { Link } from "react-router";
+import useSignup from "../hooks/useSignup";
 
 function Signup() {
-  const handleSignup = (e) => {
+  const { signup, loading, error } = useSignup();
+
+  const handleSignup = async (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const name = e.target.name.value;
     console.log(name, email, password);
+
+    await signup(email, password, name);
   }
-
-
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -24,6 +27,7 @@ function Signup() {
               name="name"
               placeholder="Enter your name"
               className="w-full p-3 mt-1 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+              required
             />
           </div>
           <div>
@@ -34,6 +38,7 @@ function Signup() {
               name="email"
               placeholder="Enter your email"
               className="w-full p-3 mt-1 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+              required
             />
           </div>
           <div>
@@ -44,16 +49,20 @@ function Signup() {
               name="password"
               placeholder="Enter your password"
               className="w-full p-3 mt-1 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+              required
             />
           </div>
           <div className="w-full text-center">
             <button
               type="submit"
+              disabled={loading}
               className="mt-4 w-1/2 bg-white text-black py-3 rounded-md hover:bg-gray-100 transition duration-200"
             >
               Sign Up
             </button>
           </div>
+          {error && <div className="error">{error}</div>}
+
         </form>
         <div className="mt-4 text-center">
           <p className="text-white">
