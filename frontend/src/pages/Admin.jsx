@@ -29,7 +29,9 @@ function Admin() {
         <div className="lg:col-span-2">
           <AdminEventContainer />
         </div>
-        <EventForm />
+        <div>
+          <EventForm />
+        </div>
         <div className="lg:col-span-3 bg-gray-800 rounded-md p-6 shadow-md">
           Account Manager
         </div>
