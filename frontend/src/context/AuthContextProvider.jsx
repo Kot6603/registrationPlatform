@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from "react";
+import { useReducer, useEffect, useState } from "react";
 
 import AuthContext from "./AuthContext";
 
@@ -17,13 +17,19 @@ function AuthContextProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, {
     user: null
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"))
     if (user) {
       dispatch({ type: "LOGIN", payload: user });
     }
+    setLoading(false);
   }, [])
+
+  const isAdmin = (email) => {
+    return email === import.meta.env.VITE_ADMIN_EMAIL;
+  }
 
   console.log("AuthContext state: ", state);
 
@@ -31,7 +37,9 @@ function AuthContextProvider({ children }) {
     <AuthContext.Provider
       value={{
         ...state,
-        dispatch
+        dispatch,
+        loading,
+        isAdmin
       }}
     >
       {children}
