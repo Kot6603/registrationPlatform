@@ -1,25 +1,16 @@
 import EventContainer from '../components/EventContainer'
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import EventContext from '../context/EventContext'
-import EventService from "../services/event"
 import { useNavigate } from "react-router"
 import useLogout from "../hooks/useLogout"
 import AuthContext from '../context/AuthContext'
 
 function LandingPage() {
-  const { events, setEvents } = useContext(EventContext)
+  const { events } = useContext(EventContext)
   const { user } = useContext(AuthContext)
   const { logout } = useLogout()
 
   const navigate = useNavigate()
-
-  useEffect(() => {
-    EventService
-      .getAll()
-      .then(notes => {
-        setEvents(notes)
-      })
-  }, [])
 
   const handleLogout = () => {
     logout()

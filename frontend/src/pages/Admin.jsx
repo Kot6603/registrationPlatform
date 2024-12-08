@@ -1,23 +1,11 @@
-import { useContext, useEffect } from "react"
 import AdminEventContainer from '../components/AdminEventContainer'
-import EventContext from '../context/EventContext'
 import EventForm from '../components/EventForm'
-import EventService from "../services/event"
 import { useNavigate } from "react-router"
 import useLogout from "../hooks/useLogout"
 
 function Admin() {
-  const { setEvents } = useContext(EventContext)
   const { logout } = useLogout()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    EventService
-      .getAll()
-      .then(notes => {
-        setEvents(notes)
-      })
-  }, [])
 
   const handleLogout = () => {
     logout()
