@@ -19,7 +19,7 @@ function AdminEventContainer() {
           <div key={event.name + event.date} className="flex items-center space-x-4">
             <EventCard
               name={event.name}
-              date={event.date}
+              date={new Date(event.date).toDateString()}
               desc={event.description}
             />
             <button

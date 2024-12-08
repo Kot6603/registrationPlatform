@@ -4,6 +4,11 @@ import AuthContext from "../context/AuthContext"
 
 function EventContainer({ events }) {
   const { user } = useContext(AuthContext)
+
+  const handleJoin = (event) => () => {
+    console.log(event)
+  }
+
   return (
     <div className="bg-white p-5 rounded-lg">
       <h2 className="text-3xl font-bold mb-4">Events</h2>
@@ -11,7 +16,7 @@ function EventContainer({ events }) {
         return (
           <div
             key={event.name + event.date}
-            className="flex justify-between"
+            className="flex items-center space-x-4"
           >
             <EventCard
               name={event.name}
@@ -20,8 +25,11 @@ function EventContainer({ events }) {
             />
             {user &&
               <button
-                className="my-8 ml-4 bg-gray-700 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300"
-              >Register</button>
+                className="bg-blue-500 text-white py-4 px-8 rounded-md hover:bg-blue-600"
+                onClick={handleJoin(event)}
+              >
+                Join
+              </button>
             }
           </div>
         )
