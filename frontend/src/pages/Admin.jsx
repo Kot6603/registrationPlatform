@@ -20,8 +20,8 @@ function Admin() {
   }, [])
 
   const handleLogout = () => {
-    navigate('/')
     logout()
+    navigate('/')
   }
 
   return (
