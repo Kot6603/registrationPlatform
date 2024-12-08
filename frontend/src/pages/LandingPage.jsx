@@ -59,9 +59,11 @@ function LandingPage() {
         </div>
       </header>
       <div className="m-8">
-        <div className="w-full mx-auto p-4 border-2 border-white bg-red-400 shadow-lg rounded-md text-center my-6">
-          <p className="text-white">You are not logged in. Sign Up / Login to register for an event.</p>
-        </div >
+        {!user &&
+          <div className="w-full mx-auto p-4 border-2 border-white bg-red-400 shadow-lg rounded-md text-center my-6">
+            <p className="text-white">You are not logged in. Sign Up / Login to register for an event.</p>
+          </div >
+        }
         <EventContainer events={events} />
       </div>
     </div>
