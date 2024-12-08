@@ -4,6 +4,7 @@ import EventContext from '../context/EventContext'
 import { useNavigate } from "react-router"
 import useLogout from "../hooks/useLogout"
 import AuthContext from '../context/AuthContext'
+import UserInfo from '../components/UserInfo'
 
 function LandingPage() {
   const { events } = useContext(EventContext)
@@ -14,7 +15,7 @@ function LandingPage() {
 
   const handleLogout = () => {
     logout()
-    navigate('/login')
+    navigate("/")
   }
 
   return (
@@ -55,7 +56,14 @@ function LandingPage() {
             <p className="text-white">You are not logged in. Sign Up / Login to register for an event.</p>
           </div >
         }
-        <EventContainer events={events} />
+        <div className="flex space-x-10">
+          <EventContainer events={events} />
+          {user &&
+            <div>
+              <UserInfo name={"yes"} email={user.email} />
+            </div>
+          }
+        </div>
       </div>
     </div>
   )

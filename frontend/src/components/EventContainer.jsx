@@ -21,7 +21,7 @@ function EventContainer({ events }) {
   }
 
   return (
-    <div className="bg-white p-5 rounded-lg">
+    <div className="w-full bg-white p-5 rounded-lg">
       <h2 className="text-3xl font-bold mb-4">Events</h2>
       {events.map((event, _) => {
         return (
