@@ -15,11 +15,7 @@ function App() {
       return <div>Loading...</div>
     }
 
-    if (!user) {
-      return <Navigate to="/login" />
-    }
-
-    if (!isAdmin(user.email)) {
+    if (!user || !isAdmin(user.email)) {
       return <Navigate to="/" />
     }
 

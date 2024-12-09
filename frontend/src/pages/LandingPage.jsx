@@ -30,12 +30,6 @@ function LandingPage() {
     }
   }, [user])
 
-
-  const handleLogout = () => {
-    logout()
-    navigate("/")
-  }
-
   return (
     <div>
       <header className="p-4 bg-gray-800 shadow-lg rounded-md m-4">
@@ -59,7 +53,7 @@ function LandingPage() {
               </>
             ) :
               <button
-                onClick={handleLogout}
+                onClick={() => logout()}
                 className="bg-white text-black mx-2 px-4 py-2 rounded-md shadow-md hover:bg-gray-100 transition duration-200"
               >
                 Logout
