@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="w-4/5 mx-auto" >
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={user && isAdmin(user.email) ? <Navigate to="/admin" /> : <LandingPage />} />
         <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
         <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
         <Route path="/admin" element={adminRoutes()} />

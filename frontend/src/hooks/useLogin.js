@@ -24,13 +24,10 @@ function useLogin() {
       localStorage.setItem("user", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
       setLoading(false);
-      return true;
     } catch (error) {
       setError(error.response.data.error);
       console.log(error.response.data.error);
       setLoading(false);
-
-      return false;
     }
   };
 

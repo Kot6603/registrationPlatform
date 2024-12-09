@@ -1,22 +1,15 @@
 import { Link } from "react-router"
-import { useNavigate } from "react-router"
 import useLogin from "../hooks/useLogin"
 
 function Login() {
   const { login, loading, error } = useLogin()
-  const navigate = useNavigate()
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password)
 
-    const success = await login(email, password)
-
-    if (success) {
-      navigate("/")
-    }
+    await login(email, password)
   }
 
   return (
@@ -32,6 +25,7 @@ function Login() {
               name="email"
               placeholder="Enter your email"
               className="w-full p-3 mt-1 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+              required
             />
           </div>
           <div>
@@ -42,6 +36,7 @@ function Login() {
               name="password"
               placeholder="Enter your password"
               className="w-full p-3 mt-1 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+              required
             />
           </div>
           {error && <div className="mx-auto p-2 text-white bg-red-500 shadow-lg rounded-md text-center">{error}</div>}
