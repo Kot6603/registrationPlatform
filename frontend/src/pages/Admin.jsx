@@ -9,7 +9,7 @@ import UserCard from "../components/UserCard"
 function Admin() {
   const { logout } = useLogout()
   const [users, setUsers] = useState([])
-  const { user } = useContext(AuthContext)
+  const { user, isAdmin } = useContext(AuthContext)
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -26,6 +26,8 @@ function Admin() {
       fetchUsers()
     }
   }, [user])
+
+  const usersToDisplay = users.filter(user => !isAdmin(user.email))
 
   return (
     <div>
@@ -49,7 +51,7 @@ function Admin() {
         </div>
         <div className="lg:col-span-3 bg-white rounded-md p-6 shadow-md">
           <h2 className="text-3xl font-bold mb-2">Users</h2>
-          {users.map((user, _) => {
+          {usersToDisplay.map((user, _) => {
             return (
               <div key={user.email} className="flex items-center space-x-4">
                 <UserCard user={user} />
