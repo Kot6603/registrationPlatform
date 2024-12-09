@@ -57,6 +57,7 @@ function Signup() {
               required
             />
           </div>
+          {error && <div className="mx-auto p-2 text-white bg-red-500 shadow-lg rounded-md text-center">{error}</div>}
           <div className="w-full text-center">
             <button
               type="submit"
@@ -66,8 +67,6 @@ function Signup() {
               Sign Up
             </button>
           </div>
-          {error && <div className="error">{error}</div>}
-
         </form>
         <div className="mt-4 text-center">
           <p className="text-white">

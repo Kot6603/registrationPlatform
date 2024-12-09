@@ -27,7 +27,7 @@ function useSignup() {
       setLoading(false);
       return true;
     } catch (error) {
-      setError(error.message);
+      setError(error.response.data.error);
       setLoading(false);
       return false;
     }

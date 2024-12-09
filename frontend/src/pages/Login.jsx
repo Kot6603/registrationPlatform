@@ -44,6 +44,7 @@ function Login() {
               className="w-full p-3 mt-1 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
             />
           </div>
+          {error && <div className="mx-auto p-2 text-white bg-red-500 shadow-lg rounded-md text-center">{error}</div>}
           <div className="w-full text-center">
             <button
               type="submit"
@@ -53,7 +54,6 @@ function Login() {
               Log In
             </button>
           </div>
-          {error && <div>{error}</div>}
         </form>
         <div className="mt-4 text-center">
           <p className="text-white">
