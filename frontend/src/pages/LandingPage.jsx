@@ -34,7 +34,7 @@ function LandingPage() {
     <div>
       <header className="p-4 bg-gray-800 shadow-lg rounded-md m-4">
         <div className="flex justify-between">
-          <h1 className="text-3xl font-bold text-white">Event Registery</h1>
+          <h1 className="text-3xl font-bold text-white">Event Registration</h1>
           <div>
             {!user ? (
               <>
