@@ -17,10 +17,7 @@ function EventContainer() {
         { userId: user.id },
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
-      console.log(response.data)
-      console.log("Joined event")
-      const updateEvent = await axios.get(`http://localhost:3001/api/events/${event.id}`);
-      setEvents(events.map((e) => e.id === event.id ? updateEvent.data : e))
+      setEvents(events.map((e) => e.id === event.id ? response.data : e))
     } catch (error) {
       console.log(error.response.data.error)
     }
