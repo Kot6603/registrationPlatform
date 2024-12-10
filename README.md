@@ -31,7 +31,7 @@ frontend/
 One of the key decisions I had to make was how to handle authentication and authorization. I needed to ensure both my API routes and my React routes were protected, allowing access only to authorized users while preventing unauthorized users from viewing restricted content.
 
 For this, I chose to use JSON Web Tokens (JWT) and `localStorage`.
-- JWT was used to authenticate users as they could be generated upon successful login and sent to the client. These can then be used to control access to the React routes. They are also sent with each API requests to protected routes to validate access to protected resources.
+- JWT was used to authenticate users as they could be generated upon successful login and sent to the client. These can then be used to control access to the React routes. They are also sent with each API request to protected routes to validate access to protected resources.
 - `localStorage` was used to store the JWT token persistently on the client side. This allowed the user to remain logged in even if they refreshed the page, providing a smoother user experience.
 
 I also chose to have two global state contexts wrapping my application. These were the `AuthContext` and `EventContext`.
@@ -82,7 +82,7 @@ Changes:
     - logs in the user 
     - sends a JWT token in the response
 - `POST /api/users/signup`
-    - signups a user and saves the user data in the database
+    - creates a new user and saves the user data in the database
     - sends a JWT token in the response
 
 #### Protected Routes (need bearer token)
