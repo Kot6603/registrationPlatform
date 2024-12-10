@@ -1,11 +1,12 @@
+import { useContext } from 'react'
+import { Routes, Route, Navigate } from 'react-router'
+
+import Admin from './pages/Admin'
+import AuthContext from './context/AuthContext'
 import LandingPage from './pages/LandingPage'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import Admin from './pages/Admin'
-import AuthContext from './context/AuthContext'
 
-import { Routes, Route, Navigate } from 'react-router'
-import { useContext } from 'react'
 
 function App() {
   const { user, loading, isAdmin } = useContext(AuthContext)

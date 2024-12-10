@@ -1,8 +1,9 @@
 import axios from "axios"
-import EventCard from "./EventCard"
 import { useContext, useState } from "react"
-import EventContext from "../context/EventContext"
+
 import AuthContext from "../context/AuthContext"
+import EventContext from "../context/EventContext"
+import EventCard from "./EventCard"
 
 function AdminEventContainer() {
   const { events, setEvents } = useContext(EventContext)

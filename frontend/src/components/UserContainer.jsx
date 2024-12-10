@@ -1,7 +1,8 @@
 import axios from "axios"
-import UserCard from "../components/UserCard"
 import { useContext, useEffect, useState } from "react"
+
 import AuthContext from "../context/AuthContext"
+import UserCard from "../components/UserCard"
 
 function UserContainer() {
   const [users, setUsers] = useState([])

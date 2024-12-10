@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+
 import useSignup from "../hooks/useSignup";
 
 function Signup() {

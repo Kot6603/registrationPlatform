@@ -1,5 +1,6 @@
-import { useState, useContext } from "react";
 import axios from "axios";
+import { useState, useContext } from "react";
+
 import AuthContext from "../context/AuthContext";
 
 function UserInfo({ name, email, setName }) {

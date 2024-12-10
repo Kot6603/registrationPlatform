@@ -1,7 +1,7 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 
 import EventContext from "./EventContext";
-import axios from "axios";
 
 function EventContextProvider({ children }) {
   const [events, setEvents] = useState([]);

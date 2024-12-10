@@ -1,10 +1,11 @@
 import axios from "axios"
-import EventContainer from '../components/EventContainer'
 import { useEffect, useContext, useState } from "react"
 import { useNavigate } from "react-router"
-import useLogout from "../hooks/useLogout"
+
 import AuthContext from '../context/AuthContext'
+import EventContainer from '../components/EventContainer'
 import UserInfo from '../components/UserInfo'
+import useLogout from "../hooks/useLogout"
 
 function LandingPage() {
   const { user } = useContext(AuthContext)

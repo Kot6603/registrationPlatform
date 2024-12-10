@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useContext } from "react"
+
 import EventContext from "../context/EventContext"
 import AuthContext from "../context/AuthContext"
 

@@ -1,4 +1,5 @@
 import { useContext } from "react";
+
 import EventContext from "../context/EventContext";
 
 function UserCard({ user }) {
