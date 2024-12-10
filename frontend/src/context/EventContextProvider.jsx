@@ -9,6 +9,7 @@ function EventContextProvider({ children }) {
   useEffect(() => {
     async function fetchEvents() {
       const response = await axios.get("http://localhost:3001/api/events");
+      response.data.sort((a, b) => new Date(a.date) - new Date(b.date));
       setEvents(response.data);
     }
     fetchEvents();

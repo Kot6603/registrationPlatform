@@ -31,8 +31,9 @@ function EventForm() {
         newEvent,
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
-      const returnedEvent = request.data
-      setEvents(events.concat(returnedEvent))
+      const newEvents = events.concat(request.data)
+      newEvents.sort((a, b) => new Date(a.date) - new Date(b.date))
+      setEvents(newEvents)
     } catch (error) {
       console.log(error.response.data.error)
     }

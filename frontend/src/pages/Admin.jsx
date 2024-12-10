@@ -28,6 +28,7 @@ function Admin() {
   }, [user])
 
   const usersToDisplay = users.filter(user => !isAdmin(user.email))
+  usersToDisplay.sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <div>
