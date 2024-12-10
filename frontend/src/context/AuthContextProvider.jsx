@@ -31,8 +31,6 @@ function AuthContextProvider({ children }) {
     return email === import.meta.env.VITE_ADMIN_EMAIL;
   }
 
-  console.log("AuthContext state: ", state);
-
   return (
     <AuthContext.Provider
       value={{
