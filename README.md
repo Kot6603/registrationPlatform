@@ -47,6 +47,12 @@ Both the `auth` and `event` states were made global so that any component can ac
 - Password hashing using `bcrypt`
 
 ## Project Wireframe
+![](mockup.png)
+The project wireframe was kept the same as the one provided with a few minor tweaks (most routes are the same)
+
+Changes:
+- Logging in as the admin user will redirect you to the /admin page, not the / (landing) page. Logging in as any other user will redirect you to the landing page.
+    - This made sense as I have made it so that admin cannot join events (hence they are also filtered from the user list in the admin page).
 
 ## Backend API Documentation
 ### Event APIs
