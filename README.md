@@ -40,6 +40,8 @@ I also chose to have two global state contexts wrapping my application. These we
 
 Both the `auth` and `event` states were made global so that any component can access the state of the two contexts. I implemented it this way as the state of the current session and the state of the events did not need to be protected and was accessible even when not logged in.
 
+I have also added filters for both the event lists and the user lists so that user can access the resources that they want easily.
+
 ## Extra Features
 - Global State Management using `useContext`
 - Protected routes in both frontend and backend using JSON Web Tokens
