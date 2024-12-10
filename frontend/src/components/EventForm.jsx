@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 
 import EventContext from "../context/EventContext"
 import AuthContext from "../context/AuthContext"
@@ -7,17 +7,18 @@ import AuthContext from "../context/AuthContext"
 function EventForm() {
   const { events, setEvents } = useContext(EventContext)
   const { user } = useContext(AuthContext)
+  const [error, setError] = useState(null)
   const handleNewEvent = async (e) => {
     e.preventDefault()
     const formDate = new Date(e.target.date.value)
 
     if (!user) {
-      console.log("You need to be logged in to create an event")
+      setError("You need to be logged in to create an event")
       return
     }
 
     if (events.some(event => event.name === e.target.name.value && new Date(event.date).getTime() === formDate.getTime())) {
-      console.log("Event already exists")
+      setError("Event already exists")
       return
     }
 
@@ -34,6 +35,7 @@ function EventForm() {
       )
       const newEvents = events.concat(request.data)
       newEvents.sort((a, b) => new Date(a.date) - new Date(b.date))
+      setError(null)
       setEvents(newEvents)
     } catch (error) {
       console.log(error.response.data.error)
@@ -72,6 +74,7 @@ function EventForm() {
             required
           />
         </div>
+        {error && <div className="mx-auto p-2 text-white bg-red-500 shadow-lg rounded-md text-center">{error}</div>}
         <button
           type="submit"
           className="w-full bg-white text-black py-2 rounded-md hover:bg-gray-300 transition"
