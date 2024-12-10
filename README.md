@@ -42,6 +42,8 @@ Both the `auth` and `event` states were made global so that any component can ac
 
 I have also added filters for both the event lists and the user lists so that user can access the resources that they want easily.
 
+I used express router for my backend API routes as that made it easy for me to add middleware to specific routes. This enabled me to protect backend API routes from unauthorised access more easily.
+
 ## Extra Features
 - Global State Management using `useContext`
 - Protected routes in both frontend and backend using JSON Web Tokens
