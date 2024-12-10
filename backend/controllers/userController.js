@@ -32,7 +32,7 @@ const signupUser = async (request, response) => {
 };
 
 const getUsers = async (_, response) => {
-  const users = await User.find({});
+  const users = await User.find({}).select("-password");
   response.json(users);
 };
 
@@ -52,7 +52,7 @@ const getUser = async (request, response) => {
     });
   }
 
-  const user = await User.findById(id);
+  const user = await User.findById(id).select("-password");
 
   if (user) {
     response.json(user);
