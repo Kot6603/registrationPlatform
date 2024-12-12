@@ -8,11 +8,11 @@
 		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.kyum151</groupId>
-	<artifactId>registrationPlatform</artifactId>
+	<groupId>com.nzpmc</groupId>
+	<artifactId>kyum151</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>registrationPlatform</name>
-	<description>Registration Platform</description>
+	<name>kyum151</name>
+	<description>Registration Platform Backend (Project 2)</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -30,6 +30,10 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
