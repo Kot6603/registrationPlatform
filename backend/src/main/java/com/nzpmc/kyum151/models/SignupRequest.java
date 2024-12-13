@@ -1,4 +1,4 @@
-package com.nzpmc.kyum151.controllers;
+package com.nzpmc.kyum151.models;
 
 public class SignupRequest {
   private String email;

@@ -1,5 +1,6 @@
 package com.nzpmc.kyum151.services;
 
+import com.nzpmc.kyum151.models.SignupRequest;
 import com.nzpmc.kyum151.models.User;
 import com.nzpmc.kyum151.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -16,7 +17,10 @@ public class UserService {
   }
 
   // signup method
-  public User signup(String email, String password, String name) {
+  public String signup(SignupRequest signupRequest) {
+    String email = signupRequest.getEmail();
+    String password = signupRequest.getPassword();
+    String name = signupRequest.getName();
     // validation
     if (email == null || password == null) {
       throw new IllegalArgumentException("All fields must be provided");
@@ -27,6 +31,8 @@ public class UserService {
     }
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
     User user = new User(email, hashedPassword, name);
-    return userRepository.save(user);
+    userRepository.save(user);
+
+    return "User created";
   }
 }

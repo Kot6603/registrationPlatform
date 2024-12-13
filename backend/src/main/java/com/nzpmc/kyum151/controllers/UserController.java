@@ -3,6 +3,7 @@ package com.nzpmc.kyum151.controllers;
 import java.util.Map;
 
 import com.nzpmc.kyum151.models.User;
+import com.nzpmc.kyum151.models.SignupRequest;
 import com.nzpmc.kyum151.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,15 +24,15 @@ public class UserController {
     this.userService = userService;
   }
 
-  // signup
+  // public routes
   @PostMapping("/signup")
   public ResponseEntity<Object> signup(@RequestBody SignupRequest signupRequest) {
     try {
-      User user = userService.signup(
-          signupRequest.getEmail(),
-          signupRequest.getPassword(),
-          signupRequest.getName());
-      return ResponseEntity.ok(user);
+      String token = userService.signup(signupRequest);
+      Map<String, String> response = Map.of(
+          "email", signupRequest.getEmail(),
+          "token", token);
+      return ResponseEntity.ok(response);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
