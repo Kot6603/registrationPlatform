@@ -1,8 +1,8 @@
-package com.nzpmc.kyum151.services;
+package com.nzpmc.kyum151.users;
 
 import com.nzpmc.kyum151.models.SignupRequest;
-import com.nzpmc.kyum151.models.User;
-import com.nzpmc.kyum151.repositories.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +10,9 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-  private final UserRepository userRepository;
 
-  public UserService(UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
+  @Autowired
+  UserRepository userRepository;
 
   // signup method
   public String signup(SignupRequest signupRequest) {

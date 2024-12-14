@@ -1,10 +1,10 @@
-package com.nzpmc.kyum151.controllers;
+package com.nzpmc.kyum151.users;
 
 import java.util.Map;
 
-import com.nzpmc.kyum151.models.User;
 import com.nzpmc.kyum151.models.SignupRequest;
-import com.nzpmc.kyum151.services.UserService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users")
 public class UserController {
 
-  private final UserService userService;
-
-  public UserController(UserService userService) {
-    this.userService = userService;
-  }
+  @Autowired
+  UserService userService;
 
   // public routes
   @PostMapping("/signup")

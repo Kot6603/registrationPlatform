@@ -1,6 +1,5 @@
-package com.nzpmc.kyum151.repositories;
+package com.nzpmc.kyum151.users;
 
-import com.nzpmc.kyum151.models.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
