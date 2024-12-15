@@ -5,6 +5,7 @@ import com.nzpmc.kyum151.users.dtos.LoginResponse;
 import com.nzpmc.kyum151.users.dtos.LoginUserDto;
 import com.nzpmc.kyum151.users.dtos.SignupUserDto;
 import com.nzpmc.kyum151.users.dtos.UserResponse;
+import com.nzpmc.kyum151.users.dtos.UserUpdateDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,5 +56,19 @@ public class UserController {
     }
 
     return ResponseEntity.ok(new UserResponse(user.getEmail(), user.getName()));
+  }
+
+  @PatchMapping("/{id}")
+  public ResponseEntity<UserResponse> updateUserById(@PathVariable String id,
+      @RequestBody UserUpdateDto userUpdateDto) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User user = (User) authentication.getPrincipal();
+
+    if (!user.getId().equals(id)) {
+      throw new IllegalArgumentException("You are not authorized to update this user");
+    }
+
+    User updatedUser = userService.updateUser(user.getId(), userUpdateDto);
+    return ResponseEntity.ok(new UserResponse(updatedUser.getEmail(), updatedUser.getName()));
   }
 }

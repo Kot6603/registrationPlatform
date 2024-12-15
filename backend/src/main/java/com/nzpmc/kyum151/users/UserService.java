@@ -2,6 +2,7 @@ package com.nzpmc.kyum151.users;
 
 import com.nzpmc.kyum151.users.dtos.LoginUserDto;
 import com.nzpmc.kyum151.users.dtos.SignupUserDto;
+import com.nzpmc.kyum151.users.dtos.UserUpdateDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,5 +49,17 @@ public class UserService {
 
     return userRepository.findByEmail(input.getEmail())
         .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+  }
+
+  public User updateUser(String id, UserUpdateDto input) {
+    User user = userRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+    String name = input.getName();
+    if (name != null) {
+      user.setName(name);
+    }
+
+    return userRepository.save(user);
   }
 }
