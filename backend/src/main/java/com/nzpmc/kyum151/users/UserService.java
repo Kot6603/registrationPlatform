@@ -1,12 +1,12 @@
 package com.nzpmc.kyum151.users;
 
-import com.nzpmc.kyum151.models.SignupRequest;
+import com.nzpmc.kyum151.users.dtos.SignupUserDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -14,11 +14,18 @@ public class UserService {
   @Autowired
   UserRepository userRepository;
 
+  @Autowired
+  PasswordEncoder passwordEncoder;
+
+  @Autowired
+  AuthenticationManager authenticationManager;
+
   // signup method
-  public String signup(SignupRequest signupRequest) {
-    String email = signupRequest.getEmail();
-    String password = signupRequest.getPassword();
-    String name = signupRequest.getName();
+  public User signup(SignupUserDto input) {
+    String email = input.getEmail();
+    String password = input.getPassword();
+    String name = input.getName();
+
     // validation
     if (email == null || password == null) {
       throw new IllegalArgumentException("All fields must be provided");
@@ -27,10 +34,9 @@ public class UserService {
     if (userRepository.findByEmail(email).isPresent()) {
       throw new IllegalArgumentException("Email already in use");
     }
+
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
     User user = new User(email, hashedPassword, name);
-    userRepository.save(user);
-
-    return "User created";
+    return userRepository.save(user);
   }
 }

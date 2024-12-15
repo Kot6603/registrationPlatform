@@ -2,7 +2,9 @@ package com.nzpmc.kyum151.users;
 
 import java.util.Map;
 
-import com.nzpmc.kyum151.models.SignupRequest;
+import com.nzpmc.kyum151.services.JwtService;
+import com.nzpmc.kyum151.users.dtos.LoginResponse;
+import com.nzpmc.kyum151.users.dtos.SignupUserDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,20 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   @Autowired
+  JwtService jwtService;
+  @Autowired
   UserService userService;
 
   // public routes
   @PostMapping("/signup")
-  public ResponseEntity<Object> signup(@RequestBody SignupRequest signupRequest) {
-    try {
-      String token = userService.signup(signupRequest);
-      Map<String, String> response = Map.of(
-          "email", signupRequest.getEmail(),
-          "token", token);
-      return ResponseEntity.ok(response);
-    } catch (Exception e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
-    }
+  public ResponseEntity<LoginResponse> signup(@RequestBody SignupUserDto signupUserDto) {
+    User user = userService.signup(signupUserDto);
+    String token = jwtService.generateToken(user);
+    return ResponseEntity.ok(new LoginResponse(user.getId(), user.getEmail(), token));
   }
 
   // eg
