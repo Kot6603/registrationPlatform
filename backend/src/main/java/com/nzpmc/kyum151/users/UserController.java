@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nzpmc.kyum151.services.JwtService;
 import com.nzpmc.kyum151.users.dtos.LoginResponse;
+import com.nzpmc.kyum151.users.dtos.LoginUserDto;
 import com.nzpmc.kyum151.users.dtos.SignupUserDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,10 @@ public class UserController {
     return ResponseEntity.ok(new LoginResponse(user.getId(), user.getEmail(), token));
   }
 
-  // eg
-  @GetMapping("/login")
-  public ResponseEntity<Object> createStudent(@RequestBody Map<String, String> studentData) {
-    System.out.println("createStudent endpoint was triggered");
-    return ResponseEntity.ok().build();
+  @PostMapping("/login")
+  public ResponseEntity<LoginResponse> login(@RequestBody LoginUserDto loginUserDto) {
+    User user = userService.login(loginUserDto);
+    String token = jwtService.generateToken(user);
+    return ResponseEntity.ok(new LoginResponse(user.getId(), user.getEmail(), token));
   }
 }

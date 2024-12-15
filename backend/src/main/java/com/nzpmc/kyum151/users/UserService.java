@@ -1,9 +1,11 @@
 package com.nzpmc.kyum151.users;
 
+import com.nzpmc.kyum151.users.dtos.LoginUserDto;
 import com.nzpmc.kyum151.users.dtos.SignupUserDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,6 @@ public class UserService {
   @Autowired
   AuthenticationManager authenticationManager;
 
-  // signup method
   public User signup(SignupUserDto input) {
     String email = input.getEmail();
     String password = input.getPassword();
@@ -38,5 +39,14 @@ public class UserService {
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
     User user = new User(email, hashedPassword, name);
     return userRepository.save(user);
+  }
+
+  public User login(LoginUserDto input) {
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(
+            input.getEmail(), input.getPassword()));
+
+    return userRepository.findByEmail(input.getEmail())
+        .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
   }
 }
