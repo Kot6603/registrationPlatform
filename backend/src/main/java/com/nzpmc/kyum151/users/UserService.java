@@ -4,6 +4,8 @@ import com.nzpmc.kyum151.users.dtos.LoginUserDto;
 import com.nzpmc.kyum151.users.dtos.SignupUserDto;
 import com.nzpmc.kyum151.users.dtos.UserUpdateDto;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -61,5 +63,9 @@ public class UserService {
     }
 
     return userRepository.save(user);
+  }
+
+  public List<User> getAllUsers() {
+    return userRepository.findAll();
   }
 }

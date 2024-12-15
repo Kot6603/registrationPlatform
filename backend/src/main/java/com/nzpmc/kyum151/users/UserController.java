@@ -7,6 +7,8 @@ import com.nzpmc.kyum151.users.dtos.SignupUserDto;
 import com.nzpmc.kyum151.users.dtos.UserResponse;
 import com.nzpmc.kyum151.users.dtos.UserUpdateDto;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -70,5 +72,18 @@ public class UserController {
 
     User updatedUser = userService.updateUser(user.getId(), userUpdateDto);
     return ResponseEntity.ok(new UserResponse(updatedUser.getEmail(), updatedUser.getName()));
+  }
+
+  // admin routes
+  @GetMapping()
+  public ResponseEntity<List<User>> getAllUsers() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User user = (User) authentication.getPrincipal();
+
+    if (!user.getEmail().equals("admin@gmail.com")) {
+      throw new IllegalArgumentException("You are not authorized to view all users");
+    }
+
+    return ResponseEntity.ok(userService.getAllUsers());
   }
 }
