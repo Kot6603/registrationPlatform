@@ -16,6 +16,11 @@ public class EventService {
     return eventRepository.findAll();
   }
 
+  public Event getEventById(String id) {
+    return eventRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+  }
+
   public Event createEvent(CreateEventDto createEventDto) {
     Event event = new Event(
         createEventDto.getDate(),
