@@ -16,11 +16,11 @@ public class Event {
   private String description;
   private List<String> users;
 
-  public Event(String date, String name, String description, List<String> users) {
+  public Event(String date, String name, String description) {
     this.date = date;
     this.name = name;
     this.description = description;
-    this.users = users;
+    this.users = List.of();
   }
 
   // Getters and Setters
