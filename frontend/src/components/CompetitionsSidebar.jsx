@@ -12,7 +12,7 @@ function CompetitionsSidebar() {
 
   return (
     <div className="bg-gray-800 rounded-md p-6 shadow-md">
-      <h2 className="text-xl text-white font-bold mb-4">Competitions</h2>
+      <h2 className="text-xl text-white font-bold mb-4">All Competitions</h2>
       <div>
         <CompetitionsList />
       </div>

@@ -1,4 +1,5 @@
 import CompetitionsSidebar from "../components/CompetitionsSidebar"
+import QuestionContainer from "../components/QuestionContainer"
 import useLogout from "../hooks/useLogout"
 
 function AdminCompetition() {
@@ -21,8 +22,8 @@ function AdminCompetition() {
         <div className="lg:col-span-1">
           <CompetitionsSidebar />
         </div>
-        <div>
-          testing
+        <div className="lg:col-span-2">
+          <QuestionContainer />
         </div>
       </div>
     </div>

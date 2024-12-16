@@ -12,7 +12,7 @@ function AdminEventContainer() {
 
   const handleDelete = (event) => async () => {
     try {
-      const response = await axios.delete(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/events/${event.id}`,
+      const response = await axios.delete(`http://localhost:${import.meta.env.vite_backend_port}/api/events/${event.id}`,
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
       const returnedEvent = response.data
