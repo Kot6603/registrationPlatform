@@ -1,7 +1,6 @@
 package com.nzpmc.kyum151.events;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
