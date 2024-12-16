@@ -5,7 +5,7 @@ import EventContext from "../context/EventContext";
 function UserCard({ user }) {
   const { events } = useContext(EventContext);
 
-  const userEvents = events.filter((event) => event.users.includes(user._id));
+  const userEvents = events.filter((event) => event.users.includes(user.id));
 
   return (
     <div className="w-full mx-auto p-4 border-2 border-white bg-gray-700 shadow-lg rounded-md m-2">
