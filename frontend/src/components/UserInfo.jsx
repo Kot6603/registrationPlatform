@@ -16,7 +16,7 @@ function UserInfo({ name, email, setName }) {
 
     try {
       const response = await axios.patch(
-        `http://localhost:3001/api/users/${user.id}`,
+        `http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/users/${user.id}`,
         { name },
         { headers: { Authorization: `Bearer ${user.token}` } }
       )

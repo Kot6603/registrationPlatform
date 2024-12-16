@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 
 import AuthContext from "../context/AuthContext";
 
-const baseUrl = "http://localhost:3001/api/users";
+const baseUrl = `http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/users`;
 
 function useSignup() {
   const [error, setError] = useState(null);

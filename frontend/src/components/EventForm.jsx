@@ -29,7 +29,7 @@ function EventForm() {
     }
 
     try {
-      const request = await axios.post("http://localhost:3001/api/events",
+      const request = await axios.post(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/events`,
         newEvent,
         { headers: { Authorization: `Bearer ${user.token}` } }
       )

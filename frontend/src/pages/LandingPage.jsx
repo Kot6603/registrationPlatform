@@ -16,7 +16,7 @@ function LandingPage() {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await axios.get(`http://localhost:3001/api/users/${user.id}`, {
+        const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/users/${user.id}`, {
           headers: {
             Authorization: `Bearer ${user.token}`
           }

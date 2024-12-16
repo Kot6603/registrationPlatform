@@ -13,7 +13,7 @@ function EventContainer() {
   const handleJoin = (event) => async () => {
     try {
       const response = await axios.post(
-        `http://localhost:3001/api/events/${event.id}/users`,
+        `http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/events/${event.id}/users`,
         { userId: user.id },
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
