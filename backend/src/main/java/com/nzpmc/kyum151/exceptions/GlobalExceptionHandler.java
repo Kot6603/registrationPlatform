@@ -17,33 +17,33 @@ public class GlobalExceptionHandler {
   public ProblemDetail handleSecurityException(Exception exception) {
     ProblemDetail errorDetail = null;
 
-    exception.printStackTrace();
+    // exception.printStackTrace();
 
     if (exception instanceof BadCredentialsException) {
       errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(401), exception.getMessage());
-      errorDetail.setProperty("message", "Invalid username or password");
+      errorDetail.setProperty("error", "Invalid username or password");
 
       return errorDetail;
     }
     if (exception instanceof AccountStatusException) {
       errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-      errorDetail.setProperty("message", "The account is locked");
+      errorDetail.setProperty("error", "The account is locked");
     }
     if (exception instanceof AccessDeniedException) {
       errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-      errorDetail.setProperty("message", "You are not authorised to access this resource");
+      errorDetail.setProperty("error", "You are not authorised to access this resource");
     }
     if (exception instanceof SignatureException) {
       errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-      errorDetail.setProperty("message", "The JWT signature is invalid");
+      errorDetail.setProperty("error", "The JWT signature is invalid");
     }
     if (exception instanceof ExpiredJwtException) {
       errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-      errorDetail.setProperty("message", "The JWT token has expired");
+      errorDetail.setProperty("error", "The JWT token has expired");
     }
     if (errorDetail == null) {
       errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), exception.getMessage());
-      errorDetail.setProperty("message", "Unknown internal server error");
+      errorDetail.setProperty("error", "Unknown internal server error");
     }
     return errorDetail;
   }

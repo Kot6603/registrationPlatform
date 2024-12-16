@@ -1,7 +1,5 @@
 package com.nzpmc.kyum151.config;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +11,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -34,7 +29,8 @@ public class SecurityConfiguration {
                 new AntPathRequestMatcher("/api/users/signup", "POST"),
                 new AntPathRequestMatcher("/api/users/login", "POST"),
                 new AntPathRequestMatcher("/api/events", "GET"),
-                new AntPathRequestMatcher("/api/events/{id}", "GET")))
+                new AntPathRequestMatcher("/api/events/{id}", "GET"),
+                new AntPathRequestMatcher("/**", "OPTIONS")))
             .permitAll()
             .anyRequest().authenticated())
         .sessionManagement(session -> session
@@ -42,22 +38,6 @@ public class SecurityConfiguration {
         .authenticationProvider(authenticationProvider)
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-    // .formLogin(form -> form.disable());
-
     return http.build();
-  }
-
-  @Bean
-  CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-
-    configuration.setAllowedOrigins(List.of("http://localhost:8080"));
-    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
-    configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
   }
 }
