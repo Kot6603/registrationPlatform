@@ -1,6 +1,7 @@
 package com.nzpmc.kyum151.events;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,12 +16,14 @@ public class Event {
   private String name;
   private String description;
   private List<String> users;
+  private String competitionId;
 
   public Event(String date, String name, String description) {
     this.date = date;
     this.name = name;
     this.description = description;
     this.users = List.of();
+    this.competitionId = "";
   }
 
   // Getters and Setters
@@ -44,6 +47,10 @@ public class Event {
     return users;
   }
 
+  public String getCompetitionId() {
+    return competitionId;
+  }
+
   public void setName(String name) {
     this.name = name;
   }
@@ -58,5 +65,9 @@ public class Event {
 
   public void setUsers(List<String> users) {
     this.users = users;
+  }
+
+  public void setCompetitionId(String competitionId) {
+    this.competitionId = competitionId;
   }
 }
