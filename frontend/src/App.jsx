@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router'
 
 import Admin from './pages/Admin'
 import AuthContext from './context/AuthContext'
+import Competition from './pages/Competition'
 import LandingPage from './pages/LandingPage'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -30,6 +31,7 @@ function App() {
         <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
         <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
         <Route path="/admin" element={adminRoutes()} />
+        <Route path="/comp" element={<Competition />} />
       </Routes >
     </div >
   )
