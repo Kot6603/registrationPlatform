@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nzpmc.kyum151.events.dtos.CreateEventDto;
+import com.nzpmc.kyum151.events.dtos.JoinEventDto;
 import com.nzpmc.kyum151.users.User;
 
 @CrossOrigin
@@ -39,6 +40,18 @@ public class EventController {
   }
 
   // protected routes
+  @PostMapping("/{id}/users")
+  public ResponseEntity<Event> addUserToEvent(@PathVariable String id, @RequestBody JoinEventDto joinEventDto) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User user = (User) authentication.getPrincipal();
+
+    if (!user.getId().equals(joinEventDto.getUserId())) {
+      throw new IllegalArgumentException("You are not authorized to update this user");
+    }
+
+    Event event = eventService.addUserToEvent(id, joinEventDto.getUserId());
+    return ResponseEntity.ok(event);
+  }
 
   // admin routes
   @PostMapping()

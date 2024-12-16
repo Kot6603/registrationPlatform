@@ -21,6 +21,17 @@ public class EventService {
         .orElseThrow(() -> new IllegalArgumentException("Event not found"));
   }
 
+  public Event addUserToEvent(String eventId, String userId) {
+    Event event = eventRepository.findById(eventId)
+        .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+
+    List<String> users = event.getUsers();
+    users.add(userId);
+    event.setUsers(users);
+
+    return eventRepository.save(event);
+  }
+
   public Event createEvent(CreateEventDto createEventDto) {
     Event event = new Event(
         createEventDto.getDate(),
