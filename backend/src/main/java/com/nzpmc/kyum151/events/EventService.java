@@ -39,4 +39,11 @@ public class EventService {
         createEventDto.getDescription());
     return eventRepository.save(event);
   }
+
+  public Event deleteEvent(String id) {
+    Event event = eventRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+    eventRepository.deleteById(id);
+    return event;
+  }
 }
