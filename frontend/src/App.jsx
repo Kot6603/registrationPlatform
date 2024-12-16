@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 
 import Admin from './pages/Admin'
+import AdminCompetition from './pages/AdminCompetition'
 import AuthContext from './context/AuthContext'
 import Competition from './pages/Competition'
 import LandingPage from './pages/LandingPage'
@@ -32,6 +33,7 @@ function App() {
         <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
         <Route path="/admin" element={adminRoutes()} />
         <Route path="/comp" element={<Competition />} />
+        <Route path="/admin/competitions" element={<AdminCompetition />} />
       </Routes >
     </div >
   )
