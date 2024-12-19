@@ -32,7 +32,7 @@ function App() {
         <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
         <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
         <Route path="/admin" element={adminRoutes(<Admin />)} />
-        <Route path="/comp" element={<Competition />} />
+        <Route path="/competitions/:id" element={<Competition />} />
         <Route path="/admin/competitions" element={adminRoutes(<AdminCompetition />)} />
       </Routes >
     </div >
