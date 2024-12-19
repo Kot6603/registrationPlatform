@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
 import QuestionCard from "./QuestionCard"
+import QuestionModalForm from "./QuestionModalForm"
 
 function QuestionContainer() {
   const [filter, setFilter] = useState("")
   const [questions, setQuestions] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => setQuestions([
     { "title": "question 1" },
@@ -12,6 +14,11 @@ function QuestionContainer() {
     { "title": "test 4" },
     { "title": "test 5" },
   ]), [])
+
+  const handleSubmit = (question) => {
+    setQuestions([...questions, question])
+    console.log("saved question", question)
+  };
 
   const handleDelete = (question) => async () => {
     console.log(question)
@@ -33,9 +40,17 @@ function QuestionContainer() {
           />
         </div>
         <div>
-          <button className="border-2 bg-white rounded-md p-2 text-sm font-normal">
+          <button
+            className="border-2 bg-white rounded-md p-2 text-sm font-normal"
+            onClick={() => setIsModalOpen(true)}
+          >
             Add Question
           </button>
+          <QuestionModalForm
+            isOpen={isModalOpen}
+            onSubmit={handleSubmit}
+            onClose={() => setIsModalOpen(false)}
+          />
         </div>
       </div>
       <div
