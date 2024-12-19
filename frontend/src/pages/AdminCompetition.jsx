@@ -18,7 +18,7 @@ function AdminCompetition() {
       if (response.data[0]) {
         setActiveCompetition({
           id: response.data[0].id,
-          name: response.data[0].name
+          title: response.data[0].title
         })
       }
       setCompetitions(response.data)

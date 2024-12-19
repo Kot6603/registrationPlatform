@@ -48,7 +48,7 @@ function QuestionContainer({ competition }) {
 
   return (
     <div className="w-full bg-gray-800 p-5 rounded-lg">
-      <h2 className="text-2xl font-bold mb-4 text-white">{competition?.name}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-white">{competition?.title}</h2>
       <div className="flex justify-between">
         <div className="text-lg pb-2 font-bold text-white">
           Filter: <input
