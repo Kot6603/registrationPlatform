@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nzpmc.kyum151.competitions.dtos.AddQuestionDto;
 import com.nzpmc.kyum151.competitions.dtos.CreateCompetitionDto;
+import com.nzpmc.kyum151.competitions.dtos.QuestionResponse;
 import com.nzpmc.kyum151.users.User;
 
 @CrossOrigin
@@ -35,6 +36,11 @@ public class CompetitionController {
   }
 
   // protected routes
+  @GetMapping("/{id}/questions/test")
+  public ResponseEntity<List<QuestionResponse>> getQuestionsForTest(@PathVariable String id) {
+    List<QuestionResponse> questions = competitionService.getQuestionsForTest(id);
+    return ResponseEntity.ok(questions);
+  }
 
   // admin routes
   @GetMapping("/{id}/questions")

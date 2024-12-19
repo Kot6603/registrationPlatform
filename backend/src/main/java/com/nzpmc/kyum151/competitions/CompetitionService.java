@@ -1,12 +1,14 @@
 package com.nzpmc.kyum151.competitions;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nzpmc.kyum151.competitions.dtos.AddQuestionDto;
 import com.nzpmc.kyum151.competitions.dtos.CreateCompetitionDto;
+import com.nzpmc.kyum151.competitions.dtos.QuestionResponse;
 
 @Service
 public class CompetitionService {
@@ -18,6 +20,18 @@ public class CompetitionService {
 
   public List<Competition> getCompetitions() {
     return competitionRepository.findAll();
+  }
+
+  public List<QuestionResponse> getQuestionsForTest(String competitionId) {
+    Competition competition = competitionRepository.findById(competitionId).orElseThrow(
+        () -> new IllegalArgumentException("Competition not found"));
+    List<String> questionsId = competition.getQuestionsId();
+
+    List<Question> questions = questionRepository.findAllById(questionsId);
+
+    return questions.stream()
+        .map(question -> new QuestionResponse(question.getId(), question.getTitle(), question.getOptions()))
+        .collect(Collectors.toList());
   }
 
   public List<Question> getQuestions(String competitionId) {
