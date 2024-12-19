@@ -1,13 +1,27 @@
-import { useState } from "react"
+import axios from "axios"
+import { useContext, useState } from "react"
+
+import AuthContext from "../context/AuthContext"
 import CompetitionsList from './CompetitionsList'
 
 
-function CompetitionsSidebar({ competitions }) {
+function CompetitionsSidebar({ competitions, setCompetitions }) {
+  const { user } = useContext(AuthContext)
   const [error, setError] = useState(null)
 
-  const handleNewCompetition = (e) => {
+  const handleNewCompetition = async (e) => {
     e.preventDefault()
-    console.log(e.target)
+    try {
+      const response = await axios.post(
+        `http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`,
+        { title: e.target.title.value },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      setError(null)
+      setCompetitions(competitions.concat(response.data))
+    } catch (error) {
+      setError(error.response.data.error)
+    }
   }
 
   return (
