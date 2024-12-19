@@ -1,5 +1,7 @@
 package com.nzpmc.kyum151.competitions;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,10 @@ public class CompetitionService {
 
   @Autowired
   CompetitionRepository competitionRepository;
+
+  public List<Competition> getCompetitions() {
+    return competitionRepository.findAll();
+  }
 
   public Competition createCompetition(CreateCompetitionDto createCompetitionDto) {
     Competition competition = new Competition(

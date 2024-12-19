@@ -1,10 +1,13 @@
 package com.nzpmc.kyum151.competitions;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,11 @@ public class CompetitionController {
   CompetitionService competitionService;
 
   // public routes
+  @GetMapping()
+  public ResponseEntity<List<Competition>> getCompetitions() {
+    List<Competition> competitions = competitionService.getCompetitions();
+    return ResponseEntity.ok(competitions);
+  }
 
   // protected routes
 
