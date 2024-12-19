@@ -8,11 +8,26 @@ function QuestionContainer() {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => setQuestions([
-    { "title": "question 1" },
-    { "title": "test 2" },
-    { "title": "test 3" },
-    { "title": "test 4" },
-    { "title": "test 5" },
+    {
+      "title": "question 1",
+      "options": ["option 1", "option 2", "option 3", "option 4"],
+      "correctOptionIndex": 0,
+    },
+    {
+      "title": "question 2",
+      "options": ["option 1", "option 2", "option 3", "option 4"],
+      "correctOptionIndex": 3,
+    },
+    {
+      "title": "question 3",
+      "options": ["option 1", "option 2", "option 3", "option 4"],
+      "correctOptionIndex": 1,
+    },
+    {
+      "title": "question 4",
+      "options": ["option 1", "option 2", "option 3", "option 4"],
+      "correctOptionIndex": 2,
+    },
   ]), [])
 
   const handleSubmit = (question) => {
