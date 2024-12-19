@@ -1,4 +1,4 @@
-packagj com.nzpmc.kyum151.competitions;
+package com.nzpmc.kyum151.competitions;
 
 import java.util.List;
 
@@ -61,7 +61,7 @@ public class CompetitionController {
   }
 
   @PostMapping("/{id}/questions")
-  public ResponseEntity<Competition> addQuestionToCompetition(@PathVariable String id,
+  public ResponseEntity<Question> addQuestionToCompetition(@PathVariable String id,
       @RequestBody AddQuestionDto addQuestionDto) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     User user = (User) authentication.getPrincipal();
@@ -69,7 +69,7 @@ public class CompetitionController {
       throw new IllegalArgumentException("You are not authorized to add questions");
     }
 
-    Competition competition = competitionService.addQuestionToCompetition(id, addQuestionDto);
-    return ResponseEntity.ok(competition);
+    Question question = competitionService.addQuestionToCompetition(id, addQuestionDto);
+    return ResponseEntity.ok(question);
   }
 }

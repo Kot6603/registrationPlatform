@@ -34,7 +34,7 @@ public class CompetitionService {
     return competitionRepository.save(competition);
   }
 
-  public Competition addQuestionToCompetition(String competitionId, AddQuestionDto addQuestionDto) {
+  public Question addQuestionToCompetition(String competitionId, AddQuestionDto addQuestionDto) {
     Competition competition = competitionRepository.findById(competitionId).orElseThrow(
         () -> new IllegalArgumentException("Competition not found"));
 
@@ -43,6 +43,8 @@ public class CompetitionService {
 
     Question newQuestion = questionRepository.save(question);
     competition.addQuestionId(newQuestion.getId());
-    return competitionRepository.save(competition);
+    competitionRepository.save(competition);
+
+    return newQuestion;
   }
 }

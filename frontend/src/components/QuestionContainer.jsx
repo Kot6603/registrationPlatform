@@ -27,9 +27,17 @@ function QuestionContainer({ competition }) {
     }
   }, [user.token, competition])
 
-  const handleSubmit = (question) => {
-    setQuestions([...questions, question])
-    console.log("saved question", question)
+  const handleSubmit = async (question) => {
+    try {
+      const response = await axios.post(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${competition.id}/questions`,
+        question,
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+
+      setQuestions(questions.concat(response.data))
+    } catch (error) {
+      console.error("Error creating question", error)
+    }
   };
 
   const handleDelete = (question) => async () => {
