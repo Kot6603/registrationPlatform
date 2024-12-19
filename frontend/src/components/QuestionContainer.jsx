@@ -1,34 +1,31 @@
-import { useState, useEffect } from "react"
+import axios from "axios"
+import { useContext, useEffect, useState } from "react"
+
+import AuthContext from "../context/AuthContext"
 import QuestionCard from "./QuestionCard"
 import QuestionModalForm from "./QuestionModalForm"
 
-function QuestionContainer() {
+function QuestionContainer({ competition }) {
+  const { user } = useContext(AuthContext)
   const [filter, setFilter] = useState("")
   const [questions, setQuestions] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  useEffect(() => setQuestions([
-    {
-      "title": "question 1",
-      "options": ["option 1", "option 2", "option 3", "option 4"],
-      "correctOptionIndex": 0,
-    },
-    {
-      "title": "question 2",
-      "options": ["option 1", "option 2", "option 3", "option 4"],
-      "correctOptionIndex": 3,
-    },
-    {
-      "title": "question 3",
-      "options": ["option 1", "option 2", "option 3", "option 4"],
-      "correctOptionIndex": 1,
-    },
-    {
-      "title": "question 4",
-      "options": ["option 1", "option 2", "option 3", "option 4"],
-      "correctOptionIndex": 2,
-    },
-  ]), [])
+  useEffect(() => {
+    const fetchQuestions = async (competitionId) => {
+      try {
+        const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${competitionId}/questions`,
+          { headers: { Authorization: `Bearer ${user.token}` } }
+        )
+        setQuestions(response.data)
+      } catch (error) {
+        console.error("Error fetching questions", error)
+      }
+    }
+    if (competition) {
+      fetchQuestions(competition)
+    }
+  }, [user.token, competition])
 
   const handleSubmit = (question) => {
     setQuestions([...questions, question])
@@ -43,7 +40,7 @@ function QuestionContainer() {
 
   return (
     <div className="w-full bg-gray-800 p-5 rounded-lg">
-      <h2 className="text-2xl font-bold mb-4 text-white">Questions</h2>
+      <h2 className="text-2xl font-bold mb-4 text-white">{}</h2>
       <div className="flex justify-between">
         <div className="text-lg pb-2 font-bold text-white">
           Filter: <input

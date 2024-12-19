@@ -1,4 +1,4 @@
-package com.nzpmc.kyum151.competitions;
+packagj com.nzpmc.kyum151.competitions;
 
 import java.util.List;
 
@@ -33,15 +33,21 @@ public class CompetitionController {
     return ResponseEntity.ok(competitions);
   }
 
+  // protected routes
+
+  // admin routes
   @GetMapping("/{id}/questions")
   public ResponseEntity<List<Question>> getQuestions(@PathVariable String id) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User user = (User) authentication.getPrincipal();
+    if (!user.getEmail().equals("admin@gmail.com")) {
+      throw new IllegalArgumentException("You are not authorized to create a competition");
+    }
+
     List<Question> questions = competitionService.getQuestions(id);
     return ResponseEntity.ok(questions);
   }
 
-  // protected routes
-
-  // admin routes
   @PostMapping()
   public ResponseEntity<Competition> createCompetition(@RequestBody CreateCompetitionDto createCompetitionDto) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

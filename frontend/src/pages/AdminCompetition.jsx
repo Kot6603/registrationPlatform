@@ -10,10 +10,14 @@ function AdminCompetition() {
   const { logout } = useLogout()
   const navigate = useNavigate()
   const [competitions, setCompetitions] = useState([])
+  const [activeCompetition, setActiveCompetition] = useState(null)
 
   useEffect(() => {
     async function fetchCompetitions() {
       const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`)
+      if (response.data[0]) {
+        setActiveCompetition(response.data[0].id)
+      }
       setCompetitions(response.data)
     }
     fetchCompetitions()
@@ -45,7 +49,7 @@ function AdminCompetition() {
           <CompetitionsSidebar competitions={competitions} setCompetitions={setCompetitions} />
         </div>
         <div className="lg:col-span-2">
-          <QuestionContainer />
+          <QuestionContainer competition={activeCompetition} />
         </div>
       </div>
     </div>
