@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router"
 
 import AuthContext from "../context/AuthContext"
 
@@ -6,6 +7,7 @@ function EventCard({ event, callback, options = [] }) {
   const { user, isAdmin } = useContext(AuthContext)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState({ title: "Select competition", id: "" })
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (event.competitionId) {
@@ -26,7 +28,15 @@ function EventCard({ event, callback, options = [] }) {
         <div>
           <h3 className="text-sm text-gray-200 mb-1">{new Date(event.date).toDateString()}</h3>
 
-          {!user || !isAdmin(user.email) ? null :
+          {!user ? null : !isAdmin(user.email) ?
+            <div className="relative text-sm">
+              <button
+                onClick={() => navigate(`/competitions/${event.competitionId}`)}
+                className="w-full p-1 bg-white border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+              >
+                Start Competition
+              </button>
+            </div> :
             <div className="relative text-sm">
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
