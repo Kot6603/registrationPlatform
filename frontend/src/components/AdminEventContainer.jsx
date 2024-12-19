@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 
 import AuthContext from "../context/AuthContext"
 import EventContext from "../context/EventContext"
@@ -9,6 +9,19 @@ function AdminEventContainer() {
   const { events, setEvents } = useContext(EventContext)
   const { user } = useContext(AuthContext)
   const [filter, setFilter] = useState("")
+  const [options, setOptions] = useState([])
+
+  useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`)
+        setOptions(response.data)
+      } catch (error) {
+        console.log(error.response.data.error)
+      }
+    }
+    fetchOptions()
+  }, [])
 
   const handleDelete = (event) => async () => {
     try {
@@ -17,6 +30,19 @@ function AdminEventContainer() {
       )
       const returnedEvent = response.data
       setEvents(events.filter(e => e.id !== returnedEvent.id))
+    } catch (error) {
+      console.log(error.response.data.error)
+    }
+  }
+
+  const handleCompetition = (event) => async (competitionId) => {
+    try {
+      const response = await axios.patch(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/events/${event.id}/competitions`,
+        { competitionId },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      const returnedEvent = response.data
+      setEvents(events.map(e => e.id === returnedEvent.id ? returnedEvent : e))
     } catch (error) {
       console.log(error.response.data.error)
     }
@@ -40,9 +66,9 @@ function AdminEventContainer() {
         return (
           <div key={event.name + event.date} className="flex items-center space-x-4">
             <EventCard
-              name={event.name}
-              date={new Date(event.date).toDateString()}
-              desc={event.description}
+              event={event}
+              callback={handleCompetition(event)}
+              options={options}
             />
             <button
               onClick={handleDelete(event)}

@@ -61,9 +61,8 @@ function EventContainer() {
             className="flex items-center space-x-4"
           >
             <EventCard
-              name={event.name}
-              date={new Date(event.date).toDateString()}
-              desc={event.description}
+              event={event}
+              callback={() => console.log("hi")}
             />
             {user && getButton(event)}
           </div>
