@@ -47,4 +47,18 @@ public class CompetitionService {
 
     return newQuestion;
   }
+
+  public Question deleteQuestion(String competitionId, String questionId) {
+    Competition competition = competitionRepository.findById(competitionId).orElseThrow(
+        () -> new IllegalArgumentException("Competition not found"));
+
+    competition.removeQuestionId(questionId);
+    competitionRepository.save(competition);
+
+    Question question = questionRepository.findById(questionId).orElseThrow(
+        () -> new IllegalArgumentException("Question not found"));
+    questionRepository.deleteById(questionId);
+
+    return question;
+  }
 }

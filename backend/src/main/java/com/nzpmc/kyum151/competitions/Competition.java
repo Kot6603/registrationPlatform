@@ -42,4 +42,8 @@ public class Competition {
   public void addQuestionId(String questionId) {
     this.questionsId.add(questionId);
   }
+
+  public void removeQuestionId(String questionId) {
+    this.questionsId.remove(questionId);
+  }
 }

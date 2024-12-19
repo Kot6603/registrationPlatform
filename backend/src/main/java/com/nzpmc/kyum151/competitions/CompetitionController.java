@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,6 +71,18 @@ public class CompetitionController {
     }
 
     Question question = competitionService.addQuestionToCompetition(id, addQuestionDto);
+    return ResponseEntity.ok(question);
+  }
+
+  @DeleteMapping("/{id}/questions/{questionId}")
+  public ResponseEntity<Question> addQuestionToCompetition(@PathVariable String id, @PathVariable String questionId) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User user = (User) authentication.getPrincipal();
+    if (!user.getEmail().equals("admin@gmail.com")) {
+      throw new IllegalArgumentException("You are not authorized to delete questions");
+    }
+
+    Question question = competitionService.deleteQuestion(id, questionId);
     return ResponseEntity.ok(question);
   }
 }
