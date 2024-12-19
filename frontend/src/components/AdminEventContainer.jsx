@@ -18,7 +18,6 @@ function AdminEventContainer() {
       const returnedEvent = response.data
       setEvents(events.filter(e => e.id !== returnedEvent.id))
     } catch (error) {
-      console.log(error)
       console.log(error.response.data.error)
     }
   }
