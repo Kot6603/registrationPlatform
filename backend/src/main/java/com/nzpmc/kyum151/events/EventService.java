@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nzpmc.kyum151.events.dtos.CreateEventDto;
+import com.nzpmc.kyum151.events.dtos.UpdateCompetitionDto;
 
 @Service
 public class EventService {
@@ -45,5 +46,13 @@ public class EventService {
         .orElseThrow(() -> new IllegalArgumentException("Event not found"));
     eventRepository.deleteById(id);
     return event;
+  }
+
+  public Event updateEvent(String id, UpdateCompetitionDto updateCompetitionDto) {
+    Event event = eventRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+
+    event.setCompetitionId(updateCompetitionDto.getCompetitionId());
+    return eventRepository.save(event);
   }
 }
