@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function CompetitionsList({ competitions }) {
+function CompetitionsList({ competitions, activeCompetition, setActiveCompetition }) {
   const [filter, setFilter] = useState("")
 
   const competitionsToShow = competitions.filter((competition) => competition.title.toLowerCase().includes(filter.toLowerCase()))
@@ -22,7 +22,13 @@ function CompetitionsList({ competitions }) {
             key={comp.title}
             className="flex items-center space-x-4"
           >
-            <button className="w-full mx-auto p-2 border-2 border-white bg-gray-800 shadow-lg rounded-md m-1">
+            <button
+              className={`w-full mx-auto p-2 border-2 border-white ${comp.id === activeCompetition.id ? "bg-blue-700" : "bg-gray-800"} shadow-lg rounded-md m-1`}
+              onClick={() => setActiveCompetition({
+                id: comp.id,
+                title: comp.title
+              })}
+            >
               <p className="text-lg font-bold text-white">{comp.title}</p>
             </button >
           </div>

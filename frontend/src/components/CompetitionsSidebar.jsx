@@ -5,7 +5,7 @@ import AuthContext from "../context/AuthContext"
 import CompetitionsList from './CompetitionsList'
 
 
-function CompetitionsSidebar({ competitions, setCompetitions }) {
+function CompetitionsSidebar({ competitions, setCompetitions, activeCompetition, setActiveCompetition }) {
   const { user } = useContext(AuthContext)
   const [error, setError] = useState(null)
 
@@ -28,7 +28,11 @@ function CompetitionsSidebar({ competitions, setCompetitions }) {
     <div className="bg-gray-800 rounded-md p-6 shadow-md">
       <h2 className="text-xl text-white font-bold mb-4">All Competitions</h2>
       <div>
-        <CompetitionsList competitions={competitions} />
+        <CompetitionsList
+          competitions={competitions}
+          activeCompetition={activeCompetition}
+          setActiveCompetition={setActiveCompetition}
+        />
       </div>
       <h2 className="text-xl text-white font-bold mt-4 mb-4">Create New Competition</h2>
       <form className="space-y-4" onSubmit={handleNewCompetition}>

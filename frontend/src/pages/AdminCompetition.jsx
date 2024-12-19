@@ -49,7 +49,12 @@ function AdminCompetition() {
       </header>
       <div className="max-w-screen mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          <CompetitionsSidebar competitions={competitions} setCompetitions={setCompetitions} />
+          <CompetitionsSidebar
+            competitions={competitions}
+            setCompetitions={setCompetitions}
+            activeCompetition={activeCompetition}
+            setActiveCompetition={setActiveCompetition}
+          />
         </div>
         <div className="lg:col-span-2">
           <QuestionContainer competition={activeCompetition} />
