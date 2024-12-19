@@ -14,7 +14,6 @@ function AdminCompetition() {
   useEffect(() => {
     async function fetchCompetitions() {
       const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`)
-      console.log(response.data)
       setCompetitions(response.data)
     }
     fetchCompetitions()
