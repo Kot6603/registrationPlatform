@@ -14,6 +14,18 @@ function Competition() {
   const [questions, setQuestions] = useState([])
 
   // get competition data (questions no answers)
+  useEffect(() => {
+    async function fetchQuestions() {
+      const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${id}/questions/test`,
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      );
+      console.log(response.data)
+      setQuestions(response.data)
+    }
+    if (user) {
+      fetchQuestions();
+    }
+  }, [id, user])
 
   // should we get their previous attempt data?
 
@@ -45,6 +57,27 @@ function Competition() {
       </header>
       <div className="m-8">
         <div className="w-full bg-white p-5 rounded-lg">
+          {questions.map((question, index) => (
+            <div key={index} className="mb-4">
+              <h2 className="text-lg font-bold">{question.title}</h2>
+              <div className="flex flex-col">
+                {question.options.map((option, index) => (
+                  <div key={index} className="flex items-center">
+                    <input
+                      type="radio"
+                      id={option}
+                      name={question.title}
+                      value={option}
+                      onChange={(e) => {
+                        setAttempt({ ...attempt, [question.id]: e.target.value })
+                      }}
+                    />
+                    <label htmlFor={option} className="ml-2">{option}</label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
