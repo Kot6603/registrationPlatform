@@ -12,9 +12,19 @@ public class CompetitionService {
 
   @Autowired
   CompetitionRepository competitionRepository;
+  @Autowired
+  QuestionRepository questionRepository;
 
   public List<Competition> getCompetitions() {
     return competitionRepository.findAll();
+  }
+
+  public List<Question> getQuestions(String competitionId) {
+    Competition competition = competitionRepository.findById(competitionId).orElseThrow(
+        () -> new IllegalArgumentException("Competition not found"));
+    List<String> questionsId = competition.getQuestionsId();
+
+    return questionRepository.findAllById(questionsId);
   }
 
   public Competition createCompetition(CreateCompetitionDto createCompetitionDto) {
