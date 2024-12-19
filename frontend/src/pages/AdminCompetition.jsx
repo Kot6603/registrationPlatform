@@ -16,7 +16,10 @@ function AdminCompetition() {
     async function fetchCompetitions() {
       const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`)
       if (response.data[0]) {
-        setActiveCompetition(response.data[0].id)
+        setActiveCompetition({
+          id: response.data[0].id,
+          name: response.data[0].name
+        })
       }
       setCompetitions(response.data)
     }
