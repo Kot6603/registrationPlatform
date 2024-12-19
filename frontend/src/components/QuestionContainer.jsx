@@ -41,7 +41,14 @@ function QuestionContainer({ competition }) {
   };
 
   const handleDelete = (question) => async () => {
-    console.log(question)
+    try {
+      const response = await axios.delete(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${competition.id}/questions/${question.id}`,
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      setQuestions(questions.filter((q) => q.id !== response.data.id))
+    } catch (error) {
+      console.error("Error creating question", error)
+    }
   }
 
   const questionsToShow = questions.filter((question) => question.title.toLowerCase().includes(filter.toLowerCase()))
