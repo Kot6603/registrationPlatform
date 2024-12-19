@@ -1,16 +1,7 @@
 import { useState, useEffect } from "react";
 
-function CompetitionsList() {
+function CompetitionsList({ competitions }) {
   const [filter, setFilter] = useState("")
-  const [competitions, setCompetitions] = useState([])
-
-  useEffect(() => setCompetitions([
-    { "title": "test 1" },
-    { "title": "test 2" },
-    { "title": "test 3" },
-    { "title": "test 4" },
-    { "title": "test 5" },
-  ]), [])
 
   const competitionsToShow = competitions.filter((competition) => competition.title.toLowerCase().includes(filter.toLowerCase()))
 

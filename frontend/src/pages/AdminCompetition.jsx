@@ -1,3 +1,5 @@
+import axios from "axios"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 
 import CompetitionsSidebar from "../components/CompetitionsSidebar"
@@ -7,6 +9,16 @@ import useLogout from "../hooks/useLogout"
 function AdminCompetition() {
   const { logout } = useLogout()
   const navigate = useNavigate()
+  const [competitions, setCompetitions] = useState([])
+
+  useEffect(() => {
+    async function fetchCompetitions() {
+      const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`)
+      console.log(response.data)
+      setCompetitions(response.data)
+    }
+    fetchCompetitions()
+  }, [])
 
   return (
     <div>
@@ -31,7 +43,7 @@ function AdminCompetition() {
       </header>
       <div className="max-w-screen mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          <CompetitionsSidebar />
+          <CompetitionsSidebar competitions={competitions} />
         </div>
         <div className="lg:col-span-2">
           <QuestionContainer />

@@ -30,6 +30,7 @@ public class SecurityConfiguration {
                 new AntPathRequestMatcher("/api/users/login", "POST"),
                 new AntPathRequestMatcher("/api/events", "GET"),
                 new AntPathRequestMatcher("/api/events/{id}", "GET"),
+                new AntPathRequestMatcher("/api/competitions", "GET"),
                 new AntPathRequestMatcher("/**", "OPTIONS")))
             .permitAll()
             .anyRequest().authenticated())

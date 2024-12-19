@@ -2,7 +2,7 @@ import { useState } from "react"
 import CompetitionsList from './CompetitionsList'
 
 
-function CompetitionsSidebar() {
+function CompetitionsSidebar({ competitions }) {
   const [error, setError] = useState(null)
 
   const handleNewCompetition = (e) => {
@@ -14,7 +14,7 @@ function CompetitionsSidebar() {
     <div className="bg-gray-800 rounded-md p-6 shadow-md">
       <h2 className="text-xl text-white font-bold mb-4">All Competitions</h2>
       <div>
-        <CompetitionsList />
+        <CompetitionsList competitions={competitions} />
       </div>
       <h2 className="text-xl text-white font-bold mt-4 mb-4">Create New Competition</h2>
       <form className="space-y-4" onSubmit={handleNewCompetition}>
