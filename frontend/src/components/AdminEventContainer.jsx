@@ -4,12 +4,15 @@ import { useContext, useEffect, useState } from "react"
 import AuthContext from "../context/AuthContext"
 import EventContext from "../context/EventContext"
 import EventCard from "./EventCard"
+import GradeModal from "./GradeModal"
 
 function AdminEventContainer() {
   const { events, setEvents } = useContext(EventContext)
   const { user } = useContext(AuthContext)
   const [filter, setFilter] = useState("")
   const [options, setOptions] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [marks, setMarks] = useState([])
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -45,8 +48,8 @@ function AdminEventContainer() {
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
       const marks = response.data
-      alert(`Event ${marks.title} marked as completed`)
-      console.log(marks)
+      setIsModalOpen(true)
+      setMarks(marks)
     } catch (error) {
       console.log(error)
     }
@@ -102,6 +105,11 @@ function AdminEventContainer() {
           </div>
         )
       })}
+      <GradeModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        marks={marks}
+      />
     </div >
   )
 }
