@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nzpmc.kyum151.competitions.dtos.AddQuestionDto;
 import com.nzpmc.kyum151.competitions.dtos.AttemptDto;
 import com.nzpmc.kyum151.competitions.dtos.CreateCompetitionDto;
+import com.nzpmc.kyum151.competitions.dtos.MarkResponse;
 import com.nzpmc.kyum151.competitions.dtos.QuestionResponse;
 import com.nzpmc.kyum151.users.User;
 
@@ -100,5 +101,17 @@ public class CompetitionController {
 
     Question question = competitionService.deleteQuestion(id, questionId);
     return ResponseEntity.ok(question);
+  }
+
+  @GetMapping("/{id}/mark")
+  public ResponseEntity<MarkResponse> markCompetition(@PathVariable String id) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User user = (User) authentication.getPrincipal();
+    if (!user.getEmail().equals("admin@gmail.com")) {
+      throw new IllegalArgumentException("You are not authorized to delete questions");
+    }
+
+    MarkResponse marks = competitionService.markCompetition(id);
+    return ResponseEntity.ok(marks);
   }
 }
