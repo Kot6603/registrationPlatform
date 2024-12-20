@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nzpmc.kyum151.competitions.dtos.AddQuestionDto;
+import com.nzpmc.kyum151.competitions.dtos.AttemptDto;
 import com.nzpmc.kyum151.competitions.dtos.CreateCompetitionDto;
 import com.nzpmc.kyum151.competitions.dtos.QuestionResponse;
 import com.nzpmc.kyum151.users.User;
@@ -40,6 +41,15 @@ public class CompetitionController {
   public ResponseEntity<List<QuestionResponse>> getQuestionsForTest(@PathVariable String id) {
     List<QuestionResponse> questions = competitionService.getQuestionsForTest(id);
     return ResponseEntity.ok(questions);
+  }
+
+  @PostMapping("/{id}/attempts")
+  public ResponseEntity<Attempt> createAttempt(@PathVariable String id, @RequestBody AttemptDto attemptDto) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User user = (User) authentication.getPrincipal();
+
+    Attempt attempt = competitionService.createAttempt(user.getEmail(), id, attemptDto);
+    return ResponseEntity.ok(attempt);
   }
 
   // admin routes

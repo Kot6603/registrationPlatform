@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nzpmc.kyum151.competitions.dtos.AddQuestionDto;
+import com.nzpmc.kyum151.competitions.dtos.AttemptDto;
 import com.nzpmc.kyum151.competitions.dtos.CreateCompetitionDto;
 import com.nzpmc.kyum151.competitions.dtos.QuestionResponse;
 
@@ -17,6 +18,8 @@ public class CompetitionService {
   CompetitionRepository competitionRepository;
   @Autowired
   QuestionRepository questionRepository;
+  @Autowired
+  AttemptRepository attemptRepository;
 
   public List<Competition> getCompetitions() {
     return competitionRepository.findAll();
@@ -32,6 +35,11 @@ public class CompetitionService {
     return questions.stream()
         .map(question -> new QuestionResponse(question.getId(), question.getTitle(), question.getOptions()))
         .collect(Collectors.toList());
+  }
+
+  public Attempt createAttempt(String studentEmail, String competitionId, AttemptDto attemptDto) {
+    Attempt newAttempt = new Attempt(studentEmail, competitionId, attemptDto.getAttempt());
+    return attemptRepository.save(newAttempt);
   }
 
   public List<Question> getQuestions(String competitionId) {
