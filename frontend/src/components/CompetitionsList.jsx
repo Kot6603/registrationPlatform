@@ -23,7 +23,7 @@ function CompetitionsList({ competitions, activeCompetition, setActiveCompetitio
             className="flex items-center space-x-4"
           >
             <button
-              className={`w-full mx-auto p-2 border-2 border-white ${comp.id === activeCompetition.id ? "bg-blue-700" : "bg-gray-800"} shadow-lg rounded-md m-1`}
+              className={`w-full mx-auto p-2 border-2 border-white ${comp.id === activeCompetition?.id ? "bg-blue-700" : "bg-gray-800"} shadow-lg rounded-md m-1`}
               onClick={() => setActiveCompetition({
                 id: comp.id,
                 title: comp.title
