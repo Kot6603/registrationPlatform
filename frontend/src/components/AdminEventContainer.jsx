@@ -35,6 +35,23 @@ function AdminEventContainer() {
     }
   }
 
+  const handleMark = (event) => async () => {
+    if (!event.competitionId) {
+      console.log("No competition selected")
+      return
+    }
+    try {
+      const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${event.competitionId}/mark`,
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      const marks = response.data
+      alert(`Event ${marks.title} marked as completed`)
+      console.log(marks)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleCompetition = (event) => async (competitionId) => {
     try {
       const response = await axios.patch(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/events/${event.id}/competitions`,
@@ -70,6 +87,12 @@ function AdminEventContainer() {
               callback={handleCompetition(event)}
               options={options}
             />
+            <button
+              onClick={handleMark(event)}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Mark
+            </button>
             <button
               onClick={handleDelete(event)}
               className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
