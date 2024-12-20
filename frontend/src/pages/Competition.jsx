@@ -9,17 +9,14 @@ function Competition() {
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
 
-  // should be a map
   const [attempt, setAttempt] = useState({})
   const [questions, setQuestions] = useState([])
 
-  // get competition data (questions no answers)
   useEffect(() => {
     async function fetchQuestions() {
       const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${id}/questions/test`,
         { headers: { Authorization: `Bearer ${user.token}` } }
       );
-      console.log(response.data)
       setQuestions(response.data)
     }
     if (user) {
@@ -30,8 +27,20 @@ function Competition() {
   // should we get their previous attempt data?
 
   // save the attempt
-  const handleSubmit = () => {
-    alert("gonna save this attempt :D")
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${id}/attempts`,
+        { attempt },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        })
+      console.log(response.data)
+      alert("Attempt saved!")
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -65,11 +74,11 @@ function Competition() {
                   <div key={index} className="flex items-center">
                     <input
                       type="radio"
-                      id={option}
+                      id={index}
                       name={question.title}
                       value={option}
                       onChange={(e) => {
-                        setAttempt({ ...attempt, [question.id]: e.target.value })
+                        setAttempt({ ...attempt, [question.id]: e.target.id })
                       }}
                     />
                     <label htmlFor={option} className="ml-2">{option}</label>
