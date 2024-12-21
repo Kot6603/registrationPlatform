@@ -63,7 +63,7 @@ function QuestionContainer({ competition }) {
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             placeholder="Search questions"
-            className="border-2 border-gray-300 rounded-md p-2 text-sm font-normal"
+            className="border-2 border-gray-300 rounded-md p-2 text-sm font-normal text-black"
           />
         </div>
         <div>

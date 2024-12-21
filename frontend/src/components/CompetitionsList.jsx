@@ -12,7 +12,7 @@ function CompetitionsList({ competitions, activeCompetition, setActiveCompetitio
           type="text"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          placeholder="Search events"
+          placeholder="Search competitions"
           className="border-2 border-gray-300 rounded-md p-1 text-sm font-normal"
         />
       </div>

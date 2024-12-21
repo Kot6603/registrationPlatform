@@ -38,6 +38,7 @@ function Competition() {
         })
       console.log(response.data)
       alert("Attempt saved!")
+      navigate("/")
     } catch (error) {
       console.error(error)
     }
