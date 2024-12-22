@@ -5,20 +5,18 @@ import AuthContext from "../context/AuthContext"
 
 function EventCard({ event, callback, options = [] }) {
   const { user, isAdmin } = useContext(AuthContext)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState({ title: "Select competition", id: "" })
+  const [selectedOption, setSelectedOption] = useState(-1)
   const navigate = useNavigate()
 
   useEffect(() => {
     if (event.competitionId) {
-      setSelectedOption(options.find(option => option.id === event.competitionId))
+      setSelectedOption(event.competitionId)
     }
   }, [options, event])
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option)
-    callback(option.id)
-    setIsDropdownOpen(false)
+  const handleOptionSelect = (e) => {
+    setSelectedOption(e.target.value)
+    callback(e.target.value)
   }
 
   return (
@@ -38,32 +36,19 @@ function EventCard({ event, callback, options = [] }) {
               </button>
             </div> :
             <div className="relative text-sm">
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="w-full p-1 bg-white border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+              <select
+                value={selectedOption}
+                onChange={handleOptionSelect}
+                className="w-full p-1 rounded"
               >
-                {selectedOption?.title}
-              </button>
-              {isDropdownOpen && (
-                <div className="absolute top-full mt-1 bg-white border rounded shadow-lg w-full z-10">
-                  {options.length > 0 ? (
-                    options.map((option, index) => (
-                      <div
-                        key={index}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => handleOptionSelect(option)}
-                      >
-                        {option.title}
-                      </div>
-                    ))
-                  ) : (
-                    <div className="px-4 py-2 text-gray-500">No results found</div>
-                  )}
-                </div>
-              )}
+                <option value={-1}>Select competition</option>
+                {options.map((option, _) => (
+                  <option key={option.id} value={option.id}>{option.title}</option>
+                ))}
+              </select>
             </div>}
         </div>
-      </div>
+      </div >
       <p className="text-white">{event.description}</p>
 
     </div >
