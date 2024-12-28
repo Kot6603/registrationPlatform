@@ -78,6 +78,18 @@ public class CompetitionController {
     return ResponseEntity.ok(competition);
   }
 
+  @PostMapping("/questions")
+  public ResponseEntity<Question> createQuestion(@RequestBody AddQuestionDto addQuestionDto) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User user = (User) authentication.getPrincipal();
+    if (!user.getEmail().equals("admin@gmail.com")) {
+      throw new IllegalArgumentException("You are not authorized to add questions");
+    }
+
+    Question question = competitionService.createQuestion(addQuestionDto);
+    return ResponseEntity.ok(question);
+  }
+
   @PostMapping("/{id}/questions")
   public ResponseEntity<Question> addQuestionToCompetition(@PathVariable String id,
       @RequestBody AddQuestionDto addQuestionDto) {

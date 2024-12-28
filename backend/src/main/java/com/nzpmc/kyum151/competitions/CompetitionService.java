@@ -60,6 +60,13 @@ public class CompetitionService {
     return competitionRepository.save(competition);
   }
 
+  public Question createQuestion(AddQuestionDto addQuestionDto) {
+    Question question = new Question(addQuestionDto.getTitle(), addQuestionDto.getOptions(),
+        addQuestionDto.getCorrectOptionIndex());
+
+    return questionRepository.save(question);
+  }
+
   public Question addQuestionToCompetition(String competitionId, AddQuestionDto addQuestionDto) {
     Competition competition = competitionRepository.findById(competitionId).orElseThrow(
         () -> new IllegalArgumentException("Competition not found"));
