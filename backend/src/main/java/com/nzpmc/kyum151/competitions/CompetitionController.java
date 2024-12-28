@@ -92,7 +92,8 @@ public class CompetitionController {
   }
 
   @DeleteMapping("/{id}/questions/{questionId}")
-  public ResponseEntity<Question> addQuestionToCompetition(@PathVariable String id, @PathVariable String questionId) {
+  public ResponseEntity<Question> deleteQuestionFromCompetition(@PathVariable String id,
+      @PathVariable String questionId) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     User user = (User) authentication.getPrincipal();
     if (!user.getEmail().equals("admin@gmail.com")) {
