@@ -92,10 +92,9 @@ public class CompetitionService {
     competition.removeQuestionId(questionId);
     competitionRepository.save(competition);
 
+    // TODO: should i return the question or competition?
     Question question = questionRepository.findById(questionId).orElseThrow(
         () -> new IllegalArgumentException("Question not found"));
-    questionRepository.deleteById(questionId);
-
     return question;
   }
 
