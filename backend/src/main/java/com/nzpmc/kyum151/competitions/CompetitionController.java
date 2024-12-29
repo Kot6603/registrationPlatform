@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nzpmc.kyum151.competitions.dtos.AddQuestionDto;
 import com.nzpmc.kyum151.competitions.dtos.AttemptDto;
 import com.nzpmc.kyum151.competitions.dtos.CreateCompetitionDto;
+import com.nzpmc.kyum151.competitions.dtos.CreateQuestionDto;
 import com.nzpmc.kyum151.competitions.dtos.MarkResponse;
 import com.nzpmc.kyum151.competitions.dtos.QuestionResponse;
 import com.nzpmc.kyum151.users.User;
@@ -79,14 +80,14 @@ public class CompetitionController {
   }
 
   @PostMapping("/questions")
-  public ResponseEntity<Question> createQuestion(@RequestBody AddQuestionDto addQuestionDto) {
+  public ResponseEntity<Question> createQuestion(@RequestBody CreateQuestionDto createQuestionDto) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     User user = (User) authentication.getPrincipal();
     if (!user.getEmail().equals("admin@gmail.com")) {
       throw new IllegalArgumentException("You are not authorized to add questions");
     }
 
-    Question question = competitionService.createQuestion(addQuestionDto);
+    Question question = competitionService.createQuestion(createQuestionDto);
     return ResponseEntity.ok(question);
   }
 

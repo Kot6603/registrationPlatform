@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.nzpmc.kyum151.competitions.dtos.AddQuestionDto;
 import com.nzpmc.kyum151.competitions.dtos.AttemptDto;
 import com.nzpmc.kyum151.competitions.dtos.CreateCompetitionDto;
+import com.nzpmc.kyum151.competitions.dtos.CreateQuestionDto;
 import com.nzpmc.kyum151.competitions.dtos.MarkResponse;
 import com.nzpmc.kyum151.competitions.dtos.QuestionResponse;
 import com.nzpmc.kyum151.competitions.dtos.StudentMark;
@@ -60,9 +61,9 @@ public class CompetitionService {
     return competitionRepository.save(competition);
   }
 
-  public Question createQuestion(AddQuestionDto addQuestionDto) {
-    Question question = new Question(addQuestionDto.getTitle(), addQuestionDto.getOptions(),
-        addQuestionDto.getCorrectOptionIndex());
+  public Question createQuestion(CreateQuestionDto createQuestionDto) {
+    Question question = new Question(createQuestionDto.getTitle(), createQuestionDto.getOptions(),
+        createQuestionDto.getCorrectOptionIndex());
 
     return questionRepository.save(question);
   }
@@ -70,14 +71,13 @@ public class CompetitionService {
   public Question addQuestionToCompetition(String competitionId, AddQuestionDto addQuestionDto) {
     Competition competition = competitionRepository.findById(competitionId).orElseThrow(
         () -> new IllegalArgumentException("Competition not found"));
+    Question newQuestion = questionRepository.findById(addQuestionDto.getQuestionId()).orElseThrow(
+        () -> new IllegalArgumentException("Question not found"));
 
-    Question question = new Question(addQuestionDto.getTitle(), addQuestionDto.getOptions(),
-        addQuestionDto.getCorrectOptionIndex());
-
-    Question newQuestion = questionRepository.save(question);
-    competition.addQuestionId(newQuestion.getId());
+    competition.addQuestionId(addQuestionDto.getQuestionId());
     competitionRepository.save(competition);
 
+    // TODO: should i return the question or competition?
     return newQuestion;
   }
 
