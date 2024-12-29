@@ -4,12 +4,14 @@ import { useContext, useEffect, useState } from "react"
 import AuthContext from "../context/AuthContext"
 import QuestionCard from "./QuestionCard"
 import QuestionModalForm from "./QuestionModalForm"
+import QuestionModalList from "./QuestionModalList"
 
 function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
   const { user } = useContext(AuthContext)
   const [filter, setFilter] = useState("")
   const [questions, setQuestions] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
 
   useEffect(() => {
     const fetchQuestions = async (competitionId) => {
@@ -26,6 +28,18 @@ function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
       fetchQuestions(competition.id)
     }
   }, [user.token, competition])
+
+  const handleAddQuestion = (questionId) => async () => {
+    try {
+      const response = await axios.post(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${competition.id}/questions`,
+        { questionId },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      setQuestions(questions.concat(response.data))
+    } catch (error) {
+      console.error("Error creating question", error)
+    }
+  }
 
   const handleNewQuestion = async (question) => {
     try {
@@ -69,14 +83,16 @@ function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
         <div>
           <button
             className="border-2 bg-white rounded-md p-2 text-sm font-normal mr-2"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsAddModalOpen(true)}
           >
             Add Question
           </button>
-          <QuestionModalForm
-            isOpen={isModalOpen}
-            onSubmit={handleNewQuestion}
-            onClose={() => setIsModalOpen(false)}
+          <QuestionModalList
+            isOpen={isAddModalOpen}
+            onSubmit={handleAddQuestion}
+            onClose={() => setIsAddModalOpen(false)}
+            allQuestions={allQuestions}
+            questions={questions}
           />
           <button
             className="border-2 bg-white rounded-md p-2 text-sm font-normal"
