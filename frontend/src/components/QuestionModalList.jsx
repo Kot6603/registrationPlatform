@@ -9,7 +9,10 @@ function QuestionModalList({ isOpen, onSubmit, onClose, allQuestions, questions 
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
-      <div className="bg-gray-800 rounded-lg p-6 h-[700px] overflow-y-auto overflow-x-hidden">
+      <div
+        className="bg-gray-800 rounded-lg p-6 max-h-[700px] overflow-y-auto overflow-x-hidden"
+        style={{ scrollbarWidth: "none" }}
+      >
         <h2 className="text-xl font-semibold mb-4 text-white">Add Question</h2>
         {/* Options */}
         {questionsToShow.map((question, index) => (
