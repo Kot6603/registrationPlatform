@@ -67,7 +67,7 @@ public class CompetitionService {
 
   public Question createQuestion(CreateQuestionDto createQuestionDto) {
     Question question = new Question(createQuestionDto.getTitle(), createQuestionDto.getOptions(),
-        createQuestionDto.getCorrectOptionIndex());
+        createQuestionDto.getCorrectOptionIndex(), createQuestionDto.getDifficulty(), createQuestionDto.getTopic());
 
     return questionRepository.save(question);
   }

@@ -1,20 +1,27 @@
 import { useState } from "react"
 
+const DIFFICULTY_TAGS = ["Easy", "Medium", "Hard"]
+const TOPIC_TAGS = ["Mechanics", "Waves", "Algebra", "Geometry"]
+
 function QuestionModalForm({ isOpen, onSubmit, onClose }) {
   const [title, setTitle] = useState("")
   const [options, setOptions] = useState(["", "", "", ""])
   const [correctOptionIndex, setCorrectOptionIndex] = useState(null)
+  const [difficulty, setDifficulty] = useState(DIFFICULTY_TAGS[0])
+  const [topic, setTopic] = useState(TOPIC_TAGS[0])
 
   if (!isOpen) return null
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSubmit({ title, options, correctOptionIndex })
+    onSubmit({ title, options, correctOptionIndex, difficulty, topic })
     onClose()
 
     setTitle("")
     setOptions(["", "", "", ""])
     setCorrectOptionIndex(null)
+    setDifficulty(DIFFICULTY_TAGS[0])
+    setTopic(TOPIC_TAGS[0])
   }
 
   return (
@@ -56,6 +63,35 @@ function QuestionModalForm({ isOpen, onSubmit, onClose }) {
               />
             </div>
           ))}
+
+          {/* Tags */}
+          <label className="block text-sm font-medium mb-1 text-white">Tags</label>
+          <div className="m-auto flex justify-center gap-4">
+            <div className="relative text-sm">
+              <label className="block text-sm font-medium mb-1 text-white">Difficulty</label>
+              <select
+                value={difficulty}
+                onChange={(e) => setDifficulty(e.target.value)}
+                className="w-full p-1 rounded"
+              >
+                {DIFFICULTY_TAGS.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </div>
+            <div className="relative text-sm">
+              <label className="block text-sm font-medium mb-1 text-white">Topic</label>
+              <select
+                value={topic}
+                onChange={(e) => setTopic(e.target.value)}
+                className="w-full p-1 rounded"
+              >
+                {TOPIC_TAGS.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </div>
+          </div>
 
           {/* Actions */}
           <div className="flex justify-end mt-4">
