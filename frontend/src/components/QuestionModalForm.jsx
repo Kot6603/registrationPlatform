@@ -20,7 +20,7 @@ function QuestionModalForm({ isOpen, onSubmit, onClose }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
       <div className="bg-gray-800 rounded-lg p-6 w-96">
-        <h2 className="text-xl font-semibold mb-4 text-white">Add Question</h2>
+        <h2 className="text-xl font-semibold mb-4 text-white">Create Question</h2>
         <form onSubmit={handleSubmit}>
           {/* Title */}
           <div className="mb-4">
@@ -70,7 +70,7 @@ function QuestionModalForm({ isOpen, onSubmit, onClose }) {
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded"
             >
-              Add
+              Create
             </button>
           </div>
         </form>

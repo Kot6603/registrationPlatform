@@ -1,16 +1,19 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 
+import AuthContext from "../context/AuthContext"
 import CompetitionsSidebar from "../components/CompetitionsSidebar"
 import QuestionContainer from "../components/QuestionContainer"
 import useLogout from "../hooks/useLogout"
 
 function AdminCompetition() {
+  const { user } = useContext(AuthContext)
   const { logout } = useLogout()
   const navigate = useNavigate()
   const [competitions, setCompetitions] = useState([])
   const [activeCompetition, setActiveCompetition] = useState(null)
+  const [allQuestions, setAllQuestions] = useState([])
 
   useEffect(() => {
     async function fetchCompetitions() {
@@ -25,6 +28,20 @@ function AdminCompetition() {
     }
     fetchCompetitions()
   }, [])
+
+  useEffect(() => {
+    const fetchAllQuestions = async () => {
+      try {
+        const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/questions`,
+          { headers: { Authorization: `Bearer ${user.token}` } }
+        )
+        setAllQuestions(response.data)
+      } catch (error) {
+        console.error("Error fetching questions", error)
+      }
+    }
+    fetchAllQuestions()
+  }, [user.token])
 
   return (
     <div>
@@ -57,7 +74,11 @@ function AdminCompetition() {
           />
         </div>
         <div className="lg:col-span-2">
-          <QuestionContainer competition={activeCompetition} />
+          <QuestionContainer
+            competition={activeCompetition}
+            allQuestions={allQuestions}
+            setAllQuestions={setAllQuestions}
+          />
         </div>
       </div>
     </div>

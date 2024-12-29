@@ -5,7 +5,7 @@ import AuthContext from "../context/AuthContext"
 import QuestionCard from "./QuestionCard"
 import QuestionModalForm from "./QuestionModalForm"
 
-function QuestionContainer({ competition }) {
+function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
   const { user } = useContext(AuthContext)
   const [filter, setFilter] = useState("")
   const [questions, setQuestions] = useState([])
@@ -27,14 +27,14 @@ function QuestionContainer({ competition }) {
     }
   }, [user.token, competition])
 
-  const handleSubmit = async (question) => {
+  const handleNewQuestion = async (question) => {
     try {
-      const response = await axios.post(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${competition.id}/questions`,
+      const response = await axios.post(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/questions`,
         question,
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
 
-      setQuestions(questions.concat(response.data))
+      setAllQuestions(allQuestions.concat(response.data))
     } catch (error) {
       console.error("Error creating question", error)
     }
@@ -68,14 +68,25 @@ function QuestionContainer({ competition }) {
         </div>
         <div>
           <button
-            className="border-2 bg-white rounded-md p-2 text-sm font-normal"
+            className="border-2 bg-white rounded-md p-2 text-sm font-normal mr-2"
             onClick={() => setIsModalOpen(true)}
           >
             Add Question
           </button>
           <QuestionModalForm
             isOpen={isModalOpen}
-            onSubmit={handleSubmit}
+            onSubmit={handleNewQuestion}
+            onClose={() => setIsModalOpen(false)}
+          />
+          <button
+            className="border-2 bg-white rounded-md p-2 text-sm font-normal"
+            onClick={() => setIsModalOpen(true)}
+          >
+            Create Question
+          </button>
+          <QuestionModalForm
+            isOpen={isModalOpen}
+            onSubmit={handleNewQuestion}
             onClose={() => setIsModalOpen(false)}
           />
         </div>
