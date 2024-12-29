@@ -55,6 +55,18 @@ public class CompetitionController {
   }
 
   // admin routes
+  @GetMapping("/questions")
+  public ResponseEntity<List<Question>> getAllQuestions() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User user = (User) authentication.getPrincipal();
+    if (!user.getEmail().equals("admin@gmail.com")) {
+      throw new IllegalArgumentException("You are not authorized to create a competition");
+    }
+
+    List<Question> questions = competitionService.getAllQuestions();
+    return ResponseEntity.ok(questions);
+  }
+
   @GetMapping("/{id}/questions")
   public ResponseEntity<List<Question>> getQuestions(@PathVariable String id) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -47,6 +47,10 @@ public class CompetitionService {
     return attemptRepository.save(newAttempt);
   }
 
+  public List<Question> getAllQuestions() {
+    return questionRepository.findAll();
+  }
+
   public List<Question> getQuestions(String competitionId) {
     Competition competition = competitionRepository.findById(competitionId).orElseThrow(
         () -> new IllegalArgumentException("Competition not found"));
