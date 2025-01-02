@@ -14,7 +14,7 @@ function CompetitionsSidebar({ competitions, setCompetitions, activeCompetition,
     try {
       const response = await axios.post(
         `http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`,
-        { title: e.target.title.value },
+        { title: e.target.title.value, startTime: e.target.startTime.value, endTime: e.target.endTime.value },
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
       setError(null)
@@ -22,6 +22,7 @@ function CompetitionsSidebar({ competitions, setCompetitions, activeCompetition,
     } catch (error) {
       setError(error.response.data.error)
     }
+    e.target.reset()
   }
 
   return (
@@ -36,12 +37,26 @@ function CompetitionsSidebar({ competitions, setCompetitions, activeCompetition,
       </div>
       <h2 className="text-xl text-white font-bold mt-4 mb-4">Create New Competition</h2>
       <form className="space-y-4" onSubmit={handleNewCompetition}>
-        <div>
+        <div className="space-y-2">
           <label htmlFor="title" className="block text-white">Title</label>
           <input
             id="title"
             type="text"
             placeholder="Enter competition title"
+            className="w-full p-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+            required
+          />
+          <label htmlFor="startTime" className="block text-white">Start Time</label>
+          <input
+            id="startTime"
+            type="datetime-local"
+            className="w-full p-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+            required
+          />
+          <label htmlFor="endTime" className="block text-white">End Time</label>
+          <input
+            id="endTime"
+            type="datetime-local"
             className="w-full p-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
             required
           />
