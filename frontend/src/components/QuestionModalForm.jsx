@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-const DIFFICULTY_TAGS = ["Easy", "Medium", "Hard"]
-const TOPIC_TAGS = ["Mechanics", "Waves", "Algebra", "Geometry"]
+import { DIFFICULTY_TAGS, TOPIC_TAGS } from "../data.js"
 
 function QuestionModalForm({ isOpen, onSubmit, onClose }) {
   const [title, setTitle] = useState("")
