@@ -61,7 +61,7 @@ public class CompetitionService {
 
   public Competition createCompetition(CreateCompetitionDto createCompetitionDto) {
     Competition competition = new Competition(
-        createCompetitionDto.getTitle());
+        createCompetitionDto.getTitle(), createCompetitionDto.getStartTime(), createCompetitionDto.getEndTime());
     return competitionRepository.save(competition);
   }
 
@@ -81,7 +81,6 @@ public class CompetitionService {
     competition.addQuestionId(addQuestionDto.getQuestionId());
     competitionRepository.save(competition);
 
-    // TODO: should i return the question or competition?
     return newQuestion;
   }
 
@@ -92,7 +91,6 @@ public class CompetitionService {
     competition.removeQuestionId(questionId);
     competitionRepository.save(competition);
 
-    // TODO: should i return the question or competition?
     Question question = questionRepository.findById(questionId).orElseThrow(
         () -> new IllegalArgumentException("Question not found"));
     return question;
