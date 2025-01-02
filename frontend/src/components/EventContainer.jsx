@@ -54,7 +54,7 @@ function EventContainer() {
           className="border-2 border-gray-300 rounded-md p-2 text-md font-normal"
         />
       </div>
-      {eventsToShow.map((event, _) => {
+      {eventsToShow.map((event) => {
         return (
           <div
             key={event.name + event.date}
@@ -62,7 +62,7 @@ function EventContainer() {
           >
             <EventCard
               event={event}
-              callback={() => console.log("hi")}
+              callback={() => null}
             />
             {user && getButton(event)}
           </div>
