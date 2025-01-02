@@ -1,5 +1,6 @@
 package com.nzpmc.kyum151.competitions;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -13,10 +14,14 @@ public class Competition {
 
   private String title;
   private List<String> questionsId;
+  private Date startTime;
+  private Date endTime;
 
-  public Competition(String title) {
+  public Competition(String title, Date startTime, Date endTime) {
     this.title = title;
     this.questionsId = List.of();
+    this.startTime = startTime;
+    this.endTime = endTime;
   }
 
   public String getId() {
@@ -29,6 +34,14 @@ public class Competition {
 
   public List<String> getQuestionsId() {
     return questionsId;
+  }
+
+  public Date getStartTime() {
+    return startTime;
+  }
+
+  public Date getEndTime() {
+    return endTime;
   }
 
   public void setTitle(String title) {
@@ -45,5 +58,13 @@ public class Competition {
 
   public void removeQuestionId(String questionId) {
     this.questionsId.remove(questionId);
+  }
+
+  public void setStartTime(Date startTime) {
+    this.startTime = startTime;
+  }
+
+  public void setEndTime(Date endTime) {
+    this.endTime = endTime;
   }
 }
