@@ -2,11 +2,13 @@ import axios from "axios"
 import { useContext, useState } from "react"
 
 import AuthContext from "../context/AuthContext"
+import CompetitionContext from "../context/CompetitionContext"
 import CompetitionsList from './CompetitionsList'
 
 
-function CompetitionsSidebar({ competitions, setCompetitions, activeCompetition, setActiveCompetition }) {
+function CompetitionsSidebar({ activeCompetition, setActiveCompetition }) {
   const { user } = useContext(AuthContext)
+  const { competitions, setCompetitions } = useContext(CompetitionContext)
   const [error, setError] = useState(null)
 
   const handleNewCompetition = async (e) => {

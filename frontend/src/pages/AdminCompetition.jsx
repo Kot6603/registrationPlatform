@@ -3,31 +3,27 @@ import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 
 import AuthContext from "../context/AuthContext"
+import CompetitionContext from "../context/CompetitionContext"
 import CompetitionsSidebar from "../components/CompetitionsSidebar"
 import QuestionContainer from "../components/QuestionContainer"
 import useLogout from "../hooks/useLogout"
 
 function AdminCompetition() {
   const { user } = useContext(AuthContext)
+  const { competitions } = useContext(CompetitionContext)
   const { logout } = useLogout()
   const navigate = useNavigate()
-  const [competitions, setCompetitions] = useState([])
   const [activeCompetition, setActiveCompetition] = useState(null)
   const [allQuestions, setAllQuestions] = useState([])
 
   useEffect(() => {
-    async function fetchCompetitions() {
-      const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`)
-      if (response.data[0]) {
-        setActiveCompetition({
-          id: response.data[0].id,
-          title: response.data[0].title
-        })
-      }
-      setCompetitions(response.data)
+    if (competitions.length > 0) {
+      setActiveCompetition({
+        id: competitions[0].id,
+        title: competitions[0].title
+      })
     }
-    fetchCompetitions()
-  }, [])
+  }, [competitions])
 
   useEffect(() => {
     const fetchAllQuestions = async () => {
@@ -67,8 +63,6 @@ function AdminCompetition() {
       <div className="max-w-screen mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
           <CompetitionsSidebar
-            competitions={competitions}
-            setCompetitions={setCompetitions}
             activeCompetition={activeCompetition}
             setActiveCompetition={setActiveCompetition}
           />
