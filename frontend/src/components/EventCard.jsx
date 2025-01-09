@@ -2,11 +2,18 @@ import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 
 import AuthContext from "../context/AuthContext"
+import CompetitionContext from "../context/CompetitionContext"
 
 function EventCard({ event, callback, options = [] }) {
   const { user, isAdmin } = useContext(AuthContext)
+  const { competitions } = useContext(CompetitionContext)
   const [selectedOption, setSelectedOption] = useState(-1)
   const navigate = useNavigate()
+
+  const competition = competitions.find((comp) => comp.id === event.competitionId)
+  const currentDate = new Date()
+  const notStarted = currentDate < new Date(competition.startTime) ? true : false
+  const finished = currentDate > new Date(competition.endTime) ? true : false
 
   useEffect(() => {
     if (event.competitionId) {
@@ -37,6 +44,20 @@ function EventCard({ event, callback, options = [] }) {
               <option key={option.id} value={option.id}>{option.title}</option>
             ))}
           </select>
+        </div>
+      )
+    }
+
+    if (notStarted || finished) {
+      return (
+        <div className="relative text-sm">
+          <button
+            onClick={() => navigate(`/competitions/${event.competitionId}`)}
+            className="w-full p-1 bg-red-500 text-white border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+            disabled
+          >
+            {notStarted ? "Competition not started" : "Competition finished"}
+          </button>
         </div>
       )
     }
