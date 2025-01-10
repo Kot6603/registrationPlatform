@@ -16,7 +16,11 @@ function CompetitionsSidebar({ activeCompetition, setActiveCompetition }) {
     try {
       const response = await axios.post(
         `http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`,
-        { title: e.target.title.value, startTime: e.target.startTime.value, endTime: e.target.endTime.value },
+        {
+          title: e.target.title.value,
+          startTime: new Date(e.target.startTime.value).toJSON(),
+          endTime: new Date(e.target.endTime.value).toJSON()
+        },
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
       setError(null)
