@@ -3,14 +3,19 @@ import { useContext, useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router"
 
 import AuthContext from "../context/AuthContext"
+import CompetitionContext from "../context/CompetitionContext"
 
 function Competition() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
+  const { competitions } = useContext(CompetitionContext)
 
   const [attempt, setAttempt] = useState({})
   const [questions, setQuestions] = useState([])
+
+  const competition = competitions.find((competition) => competition.id === id)
+  const [time, setTime] = useState(new Date(new Date(competition?.endTime) - new Date()))
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -44,12 +49,22 @@ function Competition() {
     }
   }
 
+  // per minute
+  const doStuff = () => setTimeout(() => {
+    setTime(new Date(new Date(competition?.endTime) - new Date()))
+  }, 1000)
+
+  doStuff()
+
   return (
     <div>
       <header className="p-4 bg-gray-800 shadow-lg rounded-md m-4">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold text-white">{id}</h1>
-          <div>
+          <div className="flex space-x-4">
+            <div className="text-white text-xl my-auto">
+              {time.toLocaleTimeString()} left
+            </div>
             <button
               onClick={() => navigate("/")}
               className="bg-white text-black px-4 mr-4 py-2 rounded-md shadow-md hover:bg-gray-100 transition duration-200"
