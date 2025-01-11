@@ -15,7 +15,7 @@ function Competition() {
   const [questions, setQuestions] = useState([])
 
   const competition = competitions.find((competition) => competition.id === id)
-  const [time, setTime] = useState(new Date(new Date(competition?.endTime) - new Date()))
+  const [time, setTime] = useState(new Date(competition?.endTime) - new Date())
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -49,12 +49,38 @@ function Competition() {
     }
   }
 
-  // per minute
-  const doStuff = () => setTimeout(() => {
-    setTime(new Date(new Date(competition?.endTime) - new Date()))
-  }, 1000)
+  // polling
+  useEffect(() => {
+    function poll() {
+      let isCheckInProgress = false
 
-  doStuff()
+      const check = () => {
+        if (isCheckInProgress) {
+          return
+        }
+
+        isCheckInProgress = true
+        if (competition) {
+          setTime(new Date(competition.endTime) - new Date())
+        }
+        setTimeout(check, 1000)
+        isCheckInProgress = false
+      }
+
+      check()
+    }
+    poll()
+  }, [competition])
+
+  // const doStuff = () => setTimeout(() => {
+  //   setTime(new Date(new Date(competition?.endTime) - new Date()))
+  //   if (time <= 0) {
+  //     alert("Time's up!")
+  //     handleSubmit()
+  //   }
+  // }, 1000)
+  //
+  // doStuff()
 
   return (
     <div>
@@ -63,7 +89,7 @@ function Competition() {
           <h1 className="text-2xl font-bold text-white">{id}</h1>
           <div className="flex space-x-4">
             <div className="text-white text-xl my-auto">
-              {time.toLocaleTimeString()} left
+              {time} left
             </div>
             <button
               onClick={() => navigate("/")}
