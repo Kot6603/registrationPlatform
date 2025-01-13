@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router"
 
 import AuthContext from "../context/AuthContext"
@@ -32,7 +32,7 @@ function Competition() {
   // should we get their previous attempt data?
 
   // save the attempt
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     try {
       const response = await axios.post(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${id}/attempts`,
         { attempt },
@@ -47,10 +47,11 @@ function Competition() {
     } catch (error) {
       console.error(error)
     }
-  }
+  }, [attempt, id, navigate, user])
 
   // polling
   useEffect(() => {
+    let timeoutId = null
     function poll() {
       let isCheckInProgress = false
 
@@ -61,26 +62,25 @@ function Competition() {
 
         isCheckInProgress = true
         if (competition) {
-          setTime(new Date(competition.endTime) - new Date())
+          const newTime = new Date(competition.endTime) - new Date()
+          if (newTime <= 0) {
+            handleSubmit()
+            return
+          }
+          setTime(newTime)
+          timeoutId = setTimeout(check, 1000)
         }
-        setTimeout(check, 1000)
         isCheckInProgress = false
       }
 
       check()
     }
     poll()
-  }, [competition])
 
-  // const doStuff = () => setTimeout(() => {
-  //   setTime(new Date(new Date(competition?.endTime) - new Date()))
-  //   if (time <= 0) {
-  //     alert("Time's up!")
-  //     handleSubmit()
-  //   }
-  // }, 1000)
-  //
-  // doStuff()
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [competition, handleSubmit])
 
   return (
     <div>
@@ -89,7 +89,7 @@ function Competition() {
           <h1 className="text-2xl font-bold text-white">{id}</h1>
           <div className="flex space-x-4">
             <div className="text-white text-xl my-auto">
-              {time} left
+              {Math.floor(time / 1000)} left
             </div>
             <button
               onClick={() => navigate("/")}
