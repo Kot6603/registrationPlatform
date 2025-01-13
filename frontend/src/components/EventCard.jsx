@@ -12,8 +12,8 @@ function EventCard({ event, callback, options = [] }) {
 
   const competition = competitions.find((comp) => comp.id === event.competitionId)
   const currentDate = new Date()
-  const notStarted = currentDate < new Date(competition.startTime) ? true : false
-  const finished = currentDate > new Date(competition.endTime) ? true : false
+  const notStarted = currentDate < new Date(competition?.startTime) ? true : false
+  const finished = currentDate > new Date(competition?.endTime) ? true : false
 
   useEffect(() => {
     if (event.competitionId) {
