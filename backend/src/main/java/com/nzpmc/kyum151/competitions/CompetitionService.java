@@ -1,6 +1,8 @@
 package com.nzpmc.kyum151.competitions;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,6 +45,17 @@ public class CompetitionService {
   }
 
   public Attempt createAttempt(String studentEmail, String competitionId, AttemptDto attemptDto) {
+    Competition competition = competitionRepository.findById(competitionId).orElseThrow(
+        () -> new IllegalArgumentException("Competition not found"));
+    Date endTime = competition.getEndTime();
+    Instant instant = endTime.toInstant();
+    instant = instant.plusSeconds(120);
+    Date newEndTime = Date.from(instant);
+    Date currentTime = new Date();
+    if (currentTime.after(newEndTime)) {
+      throw new IllegalArgumentException("Competition has ended");
+    }
+
     Attempt newAttempt = new Attempt(studentEmail, competitionId, attemptDto.getAttempt());
     return attemptRepository.save(newAttempt);
   }
