@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
+import { Toaster } from 'react-hot-toast'
 
 import Admin from './pages/Admin'
 import AdminCompetition from './pages/AdminCompetition'
@@ -35,6 +36,7 @@ function App() {
         <Route path="/competitions/:id" element={<Competition />} />
         <Route path="/admin/competitions" element={adminRoutes(<AdminCompetition />)} />
       </Routes >
+      <Toaster position="bottom-right" />
     </div >
   )
 }
