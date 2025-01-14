@@ -51,12 +51,15 @@ A decision that I made on the backend was to group my files by their feature ins
 
 I've also added another React context `CompetitionContext` that handles the state of all competitions globally. This became important for the competition page where I needed the start and end times of all competition in order to work out what component that user is able to interact with.
 
+Another addition is the use of toasts for alerts in the frontend. This was done using the `react-hot-toast` library. I found this to be a better user experience than using `alert` or `console.log` for alerts as it is more user friendly and better styled.
+
 ## Extra Features
 - Global State Management using `useContext`
 - Protected routes in both frontend and backend using JSON Web Tokens
 - Persistent Sessions using tokens stored in `localStorage`
 - Password hashing using `bcrypt`
 - Use of polling to have a countdown timer as the user is attempting a competition
+- Use of toasts via `react-hot-toast` for feedback to the user
 
 ## Project Wireframe
 ![](mockup.png)
