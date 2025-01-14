@@ -1,7 +1,9 @@
 import axios from "axios"
 import { useState, useContext } from "react"
+import { useNavigate } from "react-router"
 
 import AuthContext from "../context/AuthContext"
+import CompetitionContext from "../context/CompetitionContext"
 import EventContext from "../context/EventContext"
 import EventCard from "./EventCard"
 
@@ -9,6 +11,9 @@ function EventContainer() {
   const { user } = useContext(AuthContext)
   const { events, setEvents } = useContext(EventContext)
   const [filter, setFilter] = useState("")
+  const navigate = useNavigate()
+  const { competitions } = useContext(CompetitionContext)
+
 
   const handleJoin = (event) => async () => {
     try {
@@ -26,18 +31,49 @@ function EventContainer() {
   const eventsToShow = events.filter((event) => event.name.toLowerCase().includes(filter.toLowerCase()))
 
   const getButton = (event) => {
-    return event.users.includes(user.id) ? (
+    if (!(event.users.includes(user.id))) {
+      return (
+        <button
+          className="w-32 bg-blue-500 text-white py-4 px-2 rounded-md hover:bg-blue-600"
+          onClick={handleJoin(event)}
+        >
+          Join
+        </button>
+      )
+    }
+
+    if (event?.competitionId === null) {
+      return (
+        <button
+          className="w-32 cursor-not-allowed bg-gray-300 text-white py-4 px-2 rounded-md"
+        >
+          Joined
+        </button>
+      )
+    }
+
+    const competition = competitions.find((comp) => comp.id === event.competitionId)
+    const currentDate = new Date()
+    const notStarted = currentDate < new Date(competition?.startTime) ? true : false
+    const finished = currentDate > new Date(competition?.endTime) ? true : false
+    if (notStarted || finished) {
+      return (
+        <button
+          onClick={() => navigate(`/competitions/${event.competitionId}`)}
+          className="w-32 cursor-not-allowed bg-red-300 text-white py-4 px-2 rounded-md"
+          disabled
+        >
+          {notStarted ? "Competition not started" : "Competition finished"}
+        </button>
+      )
+    }
+
+    return (
       <button
-        className="w-32 cursor-not-allowed bg-gray-300 text-white py-4 px-8 rounded-md"
+        onClick={() => navigate(`/competitions/${event.competitionId}`)}
+        className="w-32 bg-blue-500 text-white py-4 px-2 rounded-md hover:bg-blue-600"
       >
-        Joined
-      </button>
-    ) : (
-      <button
-        className="w-32 bg-blue-500 text-white py-4 px-8 rounded-md hover:bg-blue-600"
-        onClick={handleJoin(event)}
-      >
-        Join
+        Start Competition
       </button>
     )
   }
