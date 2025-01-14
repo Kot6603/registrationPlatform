@@ -60,7 +60,7 @@ public class CompetitionController {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     User user = (User) authentication.getPrincipal();
     if (!user.getEmail().equals("admin@gmail.com")) {
-      throw new IllegalArgumentException("You are not authorized to create a competition");
+      throw new IllegalArgumentException("You are not authorised to get all the questions and their answers");
     }
 
     List<Question> questions = competitionService.getAllQuestions();
@@ -72,7 +72,8 @@ public class CompetitionController {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     User user = (User) authentication.getPrincipal();
     if (!user.getEmail().equals("admin@gmail.com")) {
-      throw new IllegalArgumentException("You are not authorized to create a competition");
+      throw new IllegalArgumentException(
+          "You are not authorised to get the questions and their answers for this competition");
     }
 
     List<Question> questions = competitionService.getQuestions(id);
@@ -96,7 +97,7 @@ public class CompetitionController {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     User user = (User) authentication.getPrincipal();
     if (!user.getEmail().equals("admin@gmail.com")) {
-      throw new IllegalArgumentException("You are not authorized to add questions");
+      throw new IllegalArgumentException("You are not authorized to create questions");
     }
 
     Question question = competitionService.createQuestion(createQuestionDto);
@@ -134,7 +135,7 @@ public class CompetitionController {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     User user = (User) authentication.getPrincipal();
     if (!user.getEmail().equals("admin@gmail.com")) {
-      throw new IllegalArgumentException("You are not authorized to delete questions");
+      throw new IllegalArgumentException("You are not authorized to mark the competition");
     }
 
     MarkResponse marks = competitionService.markCompetition(id);
