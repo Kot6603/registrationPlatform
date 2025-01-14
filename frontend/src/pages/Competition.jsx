@@ -86,7 +86,7 @@ function Competition() {
     <div>
       <header className="p-4 bg-gray-800 shadow-lg rounded-md m-4">
         <div className="flex justify-between">
-          <h1 className="text-2xl font-bold text-white">{id}</h1>
+          <h1 className="text-2xl font-bold text-white">{competition.title}</h1>
           <div className="flex space-x-4">
             <div className="text-white text-xl my-auto">
               {Math.floor(time / 1000)} left
