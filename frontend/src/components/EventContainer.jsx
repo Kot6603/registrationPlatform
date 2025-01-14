@@ -42,7 +42,7 @@ function EventContainer() {
       )
     }
 
-    if (event?.competitionId === null) {
+    if (event?.competitionId === "") {
       return (
         <button
           className="w-32 cursor-not-allowed bg-gray-300 text-white py-4 px-2 rounded-md"
