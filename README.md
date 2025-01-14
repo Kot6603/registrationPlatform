@@ -7,14 +7,6 @@ The codebase is separated into a backend folder (handles server side code) and t
 
 ### Basic Code Structure
 ```
-backend/
--- config/          // configuration (currently only database)
--- controllers/     // API functions
--- middleware/      // middleware functions
--- models/          // database model schemas
--- routes/          // API routes
--- index.js
-
 frontend/
 -- src/
 -- -- assets/       // any assets used
@@ -25,6 +17,14 @@ frontend/
 -- -- styles/       // styles
 -- -- App.jsx       // handles frontend routing
 -- -- main.jsx      // main entry - has context wrappers
+
+backend/src/main/java/com/nzpmc/kyum151/
+-- competitions/    // contains competition related classes
+-- config/          // contains configuration classes
+-- events/          // contains event related classes
+-- exceptions/      // contains exception classes
+-- services/        // contains services for the application
+-- users/           // contains user related classes   
 ```
 
 ## Key Decisions
@@ -44,11 +44,19 @@ I have also added filters for both the event lists and the user lists so that us
 
 I used express router for my backend API routes as that made it easy for me to add middleware to specific routes. This enabled me to protect backend API routes from unauthorised access more easily.
 
+### Project 2:
+I've kept most features of project 1 the same and migrated the node backend to a springboot backend. For example, I am still handling authentication using JWT tokens via a `FilterChain` in java.
+
+A decision that I made on the backend was to group my files by their feature instead of their role. For example, instead of having `backend/controllers`, `backend/services`, `backend/models`, I have `backend/competitions`, `backend/users`, `backend/events` with the controllers, models and services together in one file. This made it easier for me to find the files that I needed to work on.
+
+I've also added another React context `CompetitionContext` that handles the state of all competitions globally. This became important for the competition page where I needed the start and end times of all competition in order to work out what component that user is able to interact with.
+
 ## Extra Features
 - Global State Management using `useContext`
 - Protected routes in both frontend and backend using JSON Web Tokens
 - Persistent Sessions using tokens stored in `localStorage`
 - Password hashing using `bcrypt`
+- Use of polling to have a countdown timer as the user is attempting a competition
 
 ## Project Wireframe
 ![](mockup.png)
@@ -59,40 +67,5 @@ Changes:
     - This made sense as I have made it so that admin cannot join events (hence they are also filtered from the user list in the admin page).
 
 ## Backend API Documentation
-### Event APIs
-#### Public Routes
-- `GET /api/events`
-    - gets all events information
-- `GET /api/events/:id`
-    - get a specific event with `:id`
-
-#### Protected Routes (need bearer token)
-- `POST /api/events/:id/users`
-    - add the user with `userId` from the payload to the event with `:id`
-
-#### Admin Routes (need bearer token of admin)
-- `POST /api/events`
-    - create a new event with the information from the payload
-- `DELETE /api/events/:id`
-    - delete the event with `:id`
-
-### User APIs
-#### Public Routes
-- `POST /api/users/login`
-    - logs in the user 
-    - sends a JWT token in the response
-- `POST /api/users/signup`
-    - creates a new user and saves the user data in the database
-    - sends a JWT token in the response
-
-#### Protected Routes (need bearer token)
-- `GET /api/users/:id`
-    - get the information of user with `:id`
-    - the `:id` must match the current session's user id
-- `PATCH /api/users/:id`
-    - update the information of user with `:id`
-    - the `:id` must match the current session's user id
-
-#### Admin Routes (need bearer token of admin)
-- `GET /api/users`
-    - gets the information of all users
+Backend API documentation have all been moved to the `docs/api/` folder.
+See [here](docs/api/) for more information.
