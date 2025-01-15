@@ -53,7 +53,7 @@ function Competition() {
   // polling
   useEffect(() => {
     let timeoutId = null
-    function poll() {
+    const poll = () => {
       let isCheckInProgress = false
 
       const check = () => {
