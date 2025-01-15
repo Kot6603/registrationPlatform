@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router"
+import toast from "react-hot-toast"
 
 import AuthContext from "../context/AuthContext"
 import CompetitionContext from "../context/CompetitionContext"
@@ -33,7 +34,7 @@ function AdminCompetition() {
         )
         setAllQuestions(response.data)
       } catch (error) {
-        console.error("Error fetching questions", error)
+        toast.error("Error fetching questions", error)
       }
     }
     fetchAllQuestions()

@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
+import toast from "react-hot-toast"
 
 import AuthContext from "../context/AuthContext"
 import UserCard from "../components/UserCard"
@@ -17,7 +18,7 @@ function UserContainer() {
         })
         setUsers(response.data)
       } catch (error) {
-        console.log(error.response.data.error)
+        toast.error(error.response.data.error)
       }
     }
     if (user) {

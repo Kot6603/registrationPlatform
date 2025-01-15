@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState, useContext } from "react"
 import { useNavigate } from "react-router"
+import toast from "react-hot-toast"
 
 import AuthContext from "../context/AuthContext"
 import CompetitionContext from "../context/CompetitionContext"
@@ -24,7 +25,7 @@ function EventContainer() {
       )
       setEvents(events.map((e) => e.id === event.id ? response.data : e))
     } catch (error) {
-      console.log(error.response.data.error)
+      toast.error(error.response.data.error)
     }
   }
 

@@ -41,18 +41,17 @@ function Competition() {
   // save the attempt
   const handleSubmit = useCallback(async () => {
     try {
-      const response = await axios.post(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${id}/attempts`,
+      await axios.post(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${id}/attempts`,
         { attempt },
         {
           headers: {
             Authorization: `Bearer ${user.token}`
           }
         })
-      console.log(response.data)
-      toast.success("Attempt submitted successfully")
+      toast.success(`Attempt submitted successfully`)
       navigate("/")
     } catch (error) {
-      console.error(error)
+      toast.error(error)
     }
   }, [attempt, id, navigate, user])
 

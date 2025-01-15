@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useContext } from "react";
+import toast from "react-hot-toast";
 
 import AuthContext from "../context/AuthContext";
 
@@ -27,7 +28,7 @@ function useLogin() {
       setLoading(false);
     } catch (error) {
       setError(error.response.data.error);
-      console.log(error.response.data.error);
+      toast.error(error.response.data.error);
       setLoading(false);
     }
   };

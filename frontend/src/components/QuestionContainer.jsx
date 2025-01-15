@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
+import toast from "react-hot-toast"
 
 import AuthContext from "../context/AuthContext"
 import QuestionCard from "./QuestionCard"
@@ -21,7 +22,7 @@ function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
         )
         setQuestions(response.data)
       } catch (error) {
-        console.error("Error fetching questions", error)
+        toast.error("Error fetching questions", error)
       }
     }
     if (competition) {
@@ -37,7 +38,7 @@ function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
       )
       setQuestions(questions.concat(response.data))
     } catch (error) {
-      console.error("Error creating question", error)
+      toast.error("Error creating question", error)
     }
   }
 
@@ -50,7 +51,7 @@ function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
 
       setAllQuestions(allQuestions.concat(response.data))
     } catch (error) {
-      console.error("Error creating question", error)
+      toast.error("Error creating question", error)
     }
   };
 
@@ -61,7 +62,7 @@ function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
       )
       setQuestions(questions.filter((q) => q.id !== response.data.id))
     } catch (error) {
-      console.error("Error creating question", error)
+      toast.error("Error creating question", error)
     }
   }
 
@@ -111,7 +112,7 @@ function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
         className="max-h-[65vh] overflow-y-auto overflow-x-hidden"
         style={{ scrollbarWidth: "none" }}
       >
-        {questionsToShow.map((question, _) => {
+        {questionsToShow.map((question) => {
           return (
             <div
               key={question.title}

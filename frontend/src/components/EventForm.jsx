@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useContext, useState } from "react"
+import toast from "react-hot-toast"
 
 import EventContext from "../context/EventContext"
 import AuthContext from "../context/AuthContext"
@@ -38,7 +39,7 @@ function EventForm() {
       setError(null)
       setEvents(newEvents)
     } catch (error) {
-      console.log(error.response.data.error)
+      toast.error(error.response.data.error)
     }
   }
 

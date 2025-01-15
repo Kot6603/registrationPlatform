@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useEffect, useContext, useState } from "react"
 import { useNavigate } from "react-router"
+import toast from "react-hot-toast"
 
 import AuthContext from '../context/AuthContext'
 import EventContainer from '../components/EventContainer'
@@ -23,7 +24,7 @@ function LandingPage() {
         })
         setName(response.data.name)
       } catch (error) {
-        console.log(error.response.data.error)
+        toast.error(error.response.data.error)
       }
     }
     if (user) {

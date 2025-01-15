@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
+import toast from "react-hot-toast"
 
 import AuthContext from "../context/AuthContext"
 import EventContext from "../context/EventContext"
@@ -20,7 +21,7 @@ function AdminEventContainer() {
         const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`)
         setOptions(response.data)
       } catch (error) {
-        console.log(error.response.data.error)
+        toast.error(error.response.data.error)
       }
     }
     fetchOptions()
@@ -34,13 +35,13 @@ function AdminEventContainer() {
       const returnedEvent = response.data
       setEvents(events.filter(e => e.id !== returnedEvent.id))
     } catch (error) {
-      console.log(error.response.data.error)
+      toast.error(error.response.data.error)
     }
   }
 
   const handleMark = (event) => async () => {
     if (!event.competitionId) {
-      console.log("No competition selected")
+      toast.error("No competition selected")
       return
     }
     try {
@@ -51,7 +52,7 @@ function AdminEventContainer() {
       setIsModalOpen(true)
       setMarks(marks)
     } catch (error) {
-      console.log(error)
+      toast.error(error)
     }
   }
 
@@ -64,7 +65,7 @@ function AdminEventContainer() {
       const returnedEvent = response.data
       setEvents(events.map(e => e.id === returnedEvent.id ? returnedEvent : e))
     } catch (error) {
-      console.log(error.response.data.error)
+      toast.error(error.response.data.error)
     }
   }
 
