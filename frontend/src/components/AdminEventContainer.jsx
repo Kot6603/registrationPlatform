@@ -82,7 +82,7 @@ function AdminEventContainer() {
           className="border-2 border-gray-300 rounded-md p-2 text-md font-normal"
         />
       </div>
-      {eventsToShow.map((event, _) => {
+      {eventsToShow.map((event) => {
         return (
           <div key={event.name + event.date} className="flex items-center space-x-4">
             <EventCard
