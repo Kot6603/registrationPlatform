@@ -18,6 +18,14 @@ function Competition() {
   const competition = competitions.find((competition) => competition.id === id)
   const [time, setTime] = useState(new Date(competition?.endTime) - new Date())
 
+  const formatTime = (milliseconds) => {
+    const totalSeconds = milliseconds / 1000
+    const hours = Math.floor(totalSeconds / 3600)
+    const minutes = Math.floor((totalSeconds % 3600) / 60)
+    const seconds = Math.floor(totalSeconds % 60)
+    return `${hours}:${minutes}:${seconds}`
+  }
+
   useEffect(() => {
     async function fetchQuestions() {
       const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions/${id}/questions/test`,
@@ -29,8 +37,6 @@ function Competition() {
       fetchQuestions();
     }
   }, [id, user])
-
-  // should we get their previous attempt data?
 
   // save the attempt
   const handleSubmit = useCallback(async () => {
@@ -90,7 +96,7 @@ function Competition() {
           <h1 className="text-2xl font-bold text-white">{competition?.title}</h1>
           <div className="flex space-x-4">
             <div className="text-white text-xl my-auto">
-              {Math.floor(time / 1000)} left
+              {formatTime(time)} left
             </div>
             <button
               onClick={() => navigate("/")}
