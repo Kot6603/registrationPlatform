@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useContext } from "react";
+import toast from "react-hot-toast";
 
 import AuthContext from "../context/AuthContext";
 
@@ -12,6 +13,11 @@ function UserInfo({ name, email, setName }) {
   };
 
   const handleSave = async () => {
+    if (!name) {
+      toast.error("Name cannot be empty");
+      return;
+    }
+
     setIsEditing(false);
 
     try {
