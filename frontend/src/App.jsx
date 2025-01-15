@@ -8,6 +8,7 @@ import AuthContext from './context/AuthContext'
 import Competition from './pages/Competition'
 import LandingPage from './pages/LandingPage'
 import Login from './pages/Login'
+import NotFound from './pages/NotFound'
 import Signup from './pages/Signup'
 
 
@@ -35,6 +36,7 @@ function App() {
         <Route path="/admin" element={adminRoutes(<Admin />)} />
         <Route path="/competitions/:id" element={<Competition />} />
         <Route path="/admin/competitions" element={adminRoutes(<AdminCompetition />)} />
+        <Route path="*" element={<NotFound />} />
       </Routes >
       <Toaster position="bottom-right" />
     </div >
