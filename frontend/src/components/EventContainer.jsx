@@ -55,7 +55,8 @@ function EventContainer() {
 
     const competition = competitions.find((comp) => comp.id === event.competitionId)
     const currentDate = new Date()
-    const notStarted = currentDate < new Date(competition?.startTime) ? true : false
+    const startTime = new Date(competition?.startTime)
+    const notStarted = currentDate < startTime ? true : false
     const finished = currentDate > new Date(competition?.endTime) ? true : false
     if (notStarted || finished) {
       return (
@@ -64,7 +65,7 @@ function EventContainer() {
           className="w-32 cursor-not-allowed bg-red-300 text-white py-4 px-2 rounded-md"
           disabled
         >
-          {notStarted ? "Competition not started" : "Competition finished"}
+          {notStarted ? `Not Started\nStart Time\n${startTime.toLocaleTimeString()}` : "Competition finished"}
         </button>
       )
     }
