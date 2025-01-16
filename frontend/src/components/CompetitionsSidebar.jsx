@@ -1,5 +1,6 @@
 import axios from "axios"
-import { useContext, useState } from "react"
+import { useContext } from "react"
+import toast from "react-hot-toast"
 
 import AuthContext from "../context/AuthContext"
 import CompetitionContext from "../context/CompetitionContext"
@@ -9,7 +10,6 @@ import CompetitionsList from './CompetitionsList'
 function CompetitionsSidebar({ activeCompetition, setActiveCompetition }) {
   const { user } = useContext(AuthContext)
   const { competitions, setCompetitions } = useContext(CompetitionContext)
-  const [error, setError] = useState(null)
 
   const handleNewCompetition = async (e) => {
     e.preventDefault()
@@ -23,10 +23,10 @@ function CompetitionsSidebar({ activeCompetition, setActiveCompetition }) {
         },
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
-      setError(null)
       setCompetitions(competitions.concat(response.data))
+      toast.success("Competition created successfully")
     } catch (error) {
-      setError(error.response.data.error)
+      toast.error(error.response.data.error)
     }
     e.target.reset()
   }
@@ -67,7 +67,6 @@ function CompetitionsSidebar({ activeCompetition, setActiveCompetition }) {
             required
           />
         </div>
-        {error && <div className="mx-auto p-2 text-white bg-red-500 shadow-lg rounded-md text-center">{error}</div>}
         <button
           type="submit"
           className="w-full bg-white text-black py-2 rounded-md hover:bg-gray-300 transition"
