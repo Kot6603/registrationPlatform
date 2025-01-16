@@ -14,7 +14,7 @@ function UserCard({ user }) {
         <h3 className="text-sm text-gray-200">{user.email}</h3>
       </div>
       <p className="text-white">
-        {user.name} has joined {userEvents.length} events{userEvents.length > 0 ? ":" : "."}
+        {user.name} has joined {userEvents.length} event{userEvents.length === 1 ? "" : "s"}{userEvents.length > 0 ? ":" : "."}
       </p>
       <ul className="text-white">
         {userEvents.map(e =>
