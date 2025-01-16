@@ -26,7 +26,7 @@ function QuestionModalList({ isOpen, onSubmit, onClose, allQuestions, questions 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
       <div
-        className="bg-blue-600 rounded-lg p-6 min-w-[600px] max-h-[700px] overflow-y-auto overflow-x-hidden"
+        className="bg-slate-600 rounded-lg p-6 min-w-[600px] max-h-[700px] overflow-y-auto overflow-x-hidden"
         style={{ scrollbarWidth: "none" }}
       >
         <h2 className="text-xl font-semibold mb-4 text-white">Add Question</h2>
