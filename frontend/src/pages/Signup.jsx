@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import useSignup from "../hooks/useSignup";
 
 function Signup() {
-  const { signup, loading, error } = useSignup();
+  const { signup, loading } = useSignup();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -52,7 +52,6 @@ function Signup() {
               required
             />
           </div>
-          {error && <div className="mx-auto p-2 text-white bg-red-500 shadow-lg rounded-md text-center">{error}</div>}
           <div className="w-full text-center">
             <button
               type="submit"
