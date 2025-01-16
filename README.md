@@ -1,5 +1,5 @@
 # Registration Platform
-Mini registration platform for events using the MERN stack.
+Mini registration platform for events using the MERN stack (project 1 - `express` branch) and React with Spring Boot (project 2 - `main` branch).
 
 ## Codebase Structure
 
@@ -68,6 +68,44 @@ The project wireframe was kept the same as the one provided with a few minor twe
 Changes:
 - Logging in as the admin user will redirect you to the /admin page, not the / (landing) page. Logging in as any other user will redirect you to the landing page.
     - This made sense as I have made it so that admin cannot join events (hence they are also filtered from the user list in the admin page).
+
+## Getting Started
+
+Clone the repository to your local machine using the following command:
+
+```bash
+git clone git@github.com:Kot6603/registrationPlatform.git
+```
+
+### Frontend
+Navigate to the frontend directory and install the required dependencies using the following commands:
+
+```bash
+cd frontend
+npm install
+```
+
+To start the frontend server, run the following command:
+
+```bash
+npm run dev
+```
+
+### Backend
+Navigate to the backend directory and install the required dependencies using the following commands:
+
+```bash
+cd backend
+mvn install
+```
+
+To start the backend server, run the following command:
+
+```bash
+mvn spring-boot:run
+```
+
+Make sure to have a MongoDB instance running on your local machine at `mongodb://localhost:27017` (or you can change the database the application uses in `backend/src/main/resources/application.properties`.
 
 ## Backend API Documentation
 Backend API documentation have all been moved to the `docs/api/` folder.
