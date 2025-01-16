@@ -7,13 +7,11 @@ import AuthContext from "../context/AuthContext";
 const baseUrl = `http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/users`;
 
 function useLogin() {
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { dispatch } = useContext(AuthContext);
 
   const login = async (email, password) => {
     setLoading(true);
-    setError(null);
 
     try {
       const response = await axios.post(`${baseUrl}/login`, {
@@ -27,13 +25,12 @@ function useLogin() {
       dispatch({ type: "LOGIN", payload: json });
       setLoading(false);
     } catch (error) {
-      setError(error.response.data.error);
       toast.error(error.response.data.error);
       setLoading(false);
     }
   };
 
-  return { login, loading, error };
+  return { login, loading };
 }
 
 export default useLogin;

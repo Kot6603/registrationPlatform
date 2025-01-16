@@ -3,7 +3,7 @@ import { Link } from "react-router"
 import useLogin from "../hooks/useLogin"
 
 function Login() {
-  const { login, loading, error } = useLogin()
+  const { login, loading } = useLogin()
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -40,7 +40,6 @@ function Login() {
               required
             />
           </div>
-          {error && <div className="mx-auto p-2 text-white bg-red-500 shadow-lg rounded-md text-center">{error}</div>}
           <div className="w-full text-center">
             <button
               type="submit"
