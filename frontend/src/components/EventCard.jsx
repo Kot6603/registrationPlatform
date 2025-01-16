@@ -6,6 +6,12 @@ function EventCard({ event, callback, options = [] }) {
   const { user, isAdmin } = useContext(AuthContext)
   const [selectedOption, setSelectedOption] = useState(-1)
 
+  const optionsToShow = options.filter(option => {
+    const eventDate = new Date(event.date)
+    const compDate = new Date(option.startTime)
+    return eventDate.toDateString() === compDate.toDateString()
+  })
+
   useEffect(() => {
     if (event.competitionId) {
       setSelectedOption(event.competitionId)
@@ -31,7 +37,7 @@ function EventCard({ event, callback, options = [] }) {
                 className="w-full p-1 rounded"
               >
                 <option value={-1}>Select competition</option>
-                {options.map((option) => (
+                {optionsToShow.map((option) => (
                   <option key={option.id} value={option.id}>{option.title}</option>
                 ))}
               </select>
