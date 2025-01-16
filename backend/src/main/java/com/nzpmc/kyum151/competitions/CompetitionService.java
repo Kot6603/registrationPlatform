@@ -49,7 +49,7 @@ public class CompetitionService {
         () -> new IllegalArgumentException("Competition not found"));
     Date endTime = competition.getEndTime();
     Instant instant = endTime.toInstant();
-    instant = instant.plusSeconds(120);
+    instant = instant.plusSeconds(60);
     Date newEndTime = Date.from(instant);
     Date currentTime = new Date();
     if (currentTime.after(newEndTime)) {
