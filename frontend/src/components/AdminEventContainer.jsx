@@ -1,8 +1,9 @@
 import axios from "axios"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import toast from "react-hot-toast"
 
 import AuthContext from "../context/AuthContext"
+import CompetitionContext from "../context/CompetitionContext"
 import EventContext from "../context/EventContext"
 import EventCard from "./EventCard"
 import GradeModal from "./GradeModal"
@@ -10,22 +11,10 @@ import GradeModal from "./GradeModal"
 function AdminEventContainer() {
   const { events, setEvents } = useContext(EventContext)
   const { user } = useContext(AuthContext)
+  const { competitions } = useContext(CompetitionContext)
   const [filter, setFilter] = useState("")
-  const [options, setOptions] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [marks, setMarks] = useState([])
-
-  useEffect(() => {
-    const fetchOptions = async () => {
-      try {
-        const response = await axios.get(`http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`)
-        setOptions(response.data)
-      } catch (error) {
-        toast.error(error.response.data.error)
-      }
-    }
-    fetchOptions()
-  }, [])
 
   const handleDelete = (event) => async () => {
     try {
@@ -89,7 +78,7 @@ function AdminEventContainer() {
             <EventCard
               event={event}
               callback={handleCompetition(event)}
-              options={options}
+              options={competitions}
             />
             <button
               onClick={handleMark(event)}
