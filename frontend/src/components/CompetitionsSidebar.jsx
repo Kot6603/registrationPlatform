@@ -13,6 +13,15 @@ function CompetitionsSidebar({ activeCompetition, setActiveCompetition }) {
 
   const handleNewCompetition = async (e) => {
     e.preventDefault()
+    if (competitions.some(c => c.title === e.target.title.value)) {
+      toast.error("Competition already exists")
+      return
+    }
+    if (new Date(e.target.startTime.value) > new Date(e.target.endTime.value)) {
+      toast.error("Start time cannot be after end time")
+      return
+    }
+
     try {
       const response = await axios.post(
         `http://localhost:${import.meta.env.VITE_BACKEND_PORT}/api/competitions`,
