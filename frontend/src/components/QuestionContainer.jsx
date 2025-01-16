@@ -37,8 +37,9 @@ function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
       setQuestions(questions.concat(response.data))
+      toast.success("Question added")
     } catch (error) {
-      toast.error("Error creating question", error)
+      toast.error("Error adding question", error)
     }
   }
 
@@ -50,6 +51,7 @@ function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
       )
 
       setAllQuestions(allQuestions.concat(response.data))
+      toast.success("Question created successfully")
     } catch (error) {
       toast.error("Error creating question", error)
     }
@@ -61,8 +63,9 @@ function QuestionContainer({ competition, allQuestions, setAllQuestions }) {
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
       setQuestions(questions.filter((q) => q.id !== response.data.id))
+      toast.success("Question deleted successfully")
     } catch (error) {
-      toast.error("Error creating question", error)
+      toast.error("Error deleting question", error)
     }
   }
 
