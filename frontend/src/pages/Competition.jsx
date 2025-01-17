@@ -23,7 +23,7 @@ function Competition() {
     const hours = Math.floor(totalSeconds / 3600)
     const minutes = Math.floor((totalSeconds % 3600) / 60)
     const seconds = Math.floor(totalSeconds % 60)
-    return `${hours}:${minutes}:${seconds}`
+    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`
   }
 
   useEffect(() => {

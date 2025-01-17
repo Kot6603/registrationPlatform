@@ -36,7 +36,7 @@ function EventCard({ event, callback, options = [] }) {
                 onChange={handleOptionSelect}
                 className="w-full p-1 rounded"
               >
-                <option value={-1}>Select competition</option>
+                <option value={""}>Select competition</option>
                 {optionsToShow.map((option) => (
                   <option key={option.id} value={option.id}>{option.title}</option>
                 ))}
