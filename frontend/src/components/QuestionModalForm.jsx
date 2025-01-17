@@ -5,7 +5,7 @@ import { DIFFICULTY_TAGS, TOPIC_TAGS } from "../data.js"
 function QuestionModalForm({ isOpen, onSubmit, onClose }) {
   const [title, setTitle] = useState("")
   const [options, setOptions] = useState(["", "", "", ""])
-  const [correctOptionIndex, setCorrectOptionIndex] = useState(null)
+  const [correctOptionIndex, setCorrectOptionIndex] = useState(0)
   const [difficulty, setDifficulty] = useState(DIFFICULTY_TAGS[0])
   const [topic, setTopic] = useState(TOPIC_TAGS[0])
 
@@ -18,7 +18,7 @@ function QuestionModalForm({ isOpen, onSubmit, onClose }) {
 
     setTitle("")
     setOptions(["", "", "", ""])
-    setCorrectOptionIndex(null)
+    setCorrectOptionIndex(0)
     setDifficulty(DIFFICULTY_TAGS[0])
     setTopic(TOPIC_TAGS[0])
   }
