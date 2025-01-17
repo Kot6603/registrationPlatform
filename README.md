@@ -78,30 +78,32 @@ git clone git@github.com:Kot6603/registrationPlatform.git
 ```
 
 ### Frontend
-Navigate to the frontend directory and install the required dependencies using the following commands:
 
-```bash
-cd frontend
-npm install
+The frontend requires a `.env` file at the root of the `frontend` directory with the following content:
+```.env
+VITE_ADMIN_EMAIL={admin_email}
+VITE_BACKEND_PORT={backend_port}
 ```
 
-To start the frontend server, run the following command:
+After the `.env` file is created, you can start the frontend by running the following commands:
 
 ```bash
+# install dependencies
+cd frontend
+npm install
+# start server
 npm run dev
 ```
 
 ### Backend
-Navigate to the backend directory and install the required dependencies using the following commands:
+
+You can start the backend by running the following commands:
 
 ```bash
+# install dependencies
 cd backend
 mvn install
-```
-
-To start the backend server, run the following command:
-
-```bash
+# start server
 mvn spring-boot:run
 ```
 
